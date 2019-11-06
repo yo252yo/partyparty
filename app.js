@@ -24,14 +24,17 @@ class Players {
       client.send(msg);
     });  
   }
-    
-  getAllAsString() {
-    var result  = "";
+  
+  getAllIps() {
+    var result  = [];
     this.all_websockets.forEach(function (client) {
-      result += client._socket.remoteAddress;
-      result += "//";
+      result.push(client._socket.remoteAddress);
     });  
     return result;
+  }
+    
+  getAllIpsAsString() {
+    return getAllIps().toString();
   }  
 }
 
@@ -82,7 +85,7 @@ class ServerSocket {
 
 var on_socket_connection = function(webSocket, request) {
   serverSocket = new ServerSocket(webSocket);
-  PLAYERS.broadcastMessage("Now playing: " + PLAYERS.getAllAsString());  
+  PLAYERS.broadcastMessage("Now playing: " + PLAYERS.getAllIpsAsString());  
 };
 
 app.ws('/', on_socket_connection);
