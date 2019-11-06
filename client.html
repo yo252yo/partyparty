@@ -60,14 +60,14 @@ class ClientSocket {
   }
 }
 
-//var SOCKET = new ClientSocket('ws://192.168.1.229:25565');
-var SOCKET = new ClientSocket('ws://yoannbourse.com:25565/');
+var SOCKET = new ClientSocket('ws://192.168.1.229:25565');
+//var SOCKET = new ClientSocket('ws://yoannbourse.com:25565/');
 </script>
 <script src="client_library.js"></script>
 </head>
 <body>
 <h1>This is the default empty client page for PartyParty</h1>
 You should never have seen this.<br />
-<input type="button" value="start game" onclick="SOCKET.send('start_test');" />
+<input type="button" value="clickthecube" onclick="SOCKET.send('start_clickthecube');" />
 </body>
 </html>

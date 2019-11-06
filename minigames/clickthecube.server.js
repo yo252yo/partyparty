@@ -1,10 +1,16 @@
 console.log("Minigame TEST loaded");
 
+// Paths are relative because executed from module_loader.js
+var ServerSocket = require('./server_socket.js');
+var AllPlayers = require('./all_players.js');
+
+
+
 setTimeout(function(){
-  PLAYERS.broadcastMessage(Math.random() + "/" + Math.random());
+  AllPlayers.broadcastMessage(Math.random() + "/" + Math.random());
 }, 5000);
 
-game_ended = false;
+var game_ended = false;
 
 setTimeout(function(){
   if (! game_ended) {
@@ -13,11 +19,11 @@ setTimeout(function(){
 }, 15000);
 
 // This IP based approach doesnt allow for two players on the same IP, to be replaced ASAP.
-var players = PLAYERS.getAllIps();
+var players = AllPlayers.getAllIps();
 
 var scores = {};
 
-listener = function (event) {
+var listener = function (event) {
   var score = event.data;
   var ip = event.target._sender._socket.remoteAddress;
   console.log(ip + " got " + score);
@@ -28,20 +34,20 @@ listener = function (event) {
   }  
 }
 
-SERVER_SOCKET.plugModuleListener(listener);
+ServerSocket.plugModuleListener(listener);
 
-endGame = function(){
+var endGame = function(){
   game_ended = true;
   console.log("Game ended");
   var minScore = 20000;
   var argMinScore = "Noone";
   
-  for (ip in scores){
+  for (var ip in scores){
     if (scores[ip] < minScore){
       minScore = scores[ip];
       argMinScore = ip;
     }
   }
   
-  PLAYERS.broadcastMessage("Victory of " + argMinScore);
+  AllPlayers.broadcastMessage("Victory of " + argMinScore);
 }
