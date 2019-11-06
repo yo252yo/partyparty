@@ -27,7 +27,7 @@ class Players {
   
   getAllIps() {
     var result  = [];
-    this.all_websockets.forEach(function (client) {
+    this.all_websockets.clients.forEach(function (client) {
       result.push(client._socket.remoteAddress);
     });  
     return result;
@@ -42,7 +42,8 @@ var PLAYERS = new Players();
 
 
 
-var loadMinigame = function (name) {     
+var loadMinigame = function (name) { 
+  SERVER_SOCKET.resetModuleListener();
   var setup = {
     document_html: fs.readFileSync('./minigames/' +  name + '.setup.html').toString()
   };    
@@ -66,25 +67,44 @@ var loadTestMinigame = function () {
 
 
 
+
+onSocketMessage = function(event) {
+  SERVER_SOCKET.moduleListener(event);
+  
+  if (event.data == "start_test"){
+    loadTestMinigame();
+  } else {
+    console.log("received:" + event.data);
+  }
+}
+
 class ServerSocket {
   constructor(webSocket) {
-    this.webSocket = webSocket;
-    this.webSocket.onmessage = this.onSocketMessage;
+    this.webSocket = webSocket;      
+    this.webSocket.onmessage = onSocketMessage;
     
     console.log('New connection ' + this.webSocket._socket.remoteAddress);
-  }  
-
-  onSocketMessage(event) {
-    if (event.data == "start_test"){
-      loadTestMinigame();
-    } else {
-      console.log(event.data);
+    
+    this.moduleSocketListener = function(event){};
+  }
+  
+  moduleListener(event){
+    if (this.moduleSocketListener) {
+      this.moduleSocketListener(event);
     }
+  }
+  
+  resetModuleListener(){    
+    this.moduleSocketListener = function(event){};    
+  }
+    
+  plugModuleListener(listener){
+    this.moduleSocketListener = listener;
   }
 }
 
 var on_socket_connection = function(webSocket, request) {
-  serverSocket = new ServerSocket(webSocket);
+  SERVER_SOCKET = new ServerSocket(webSocket);
   PLAYERS.broadcastMessage("Now playing: " + PLAYERS.getAllIpsAsString());  
 };
 

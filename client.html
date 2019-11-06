@@ -6,7 +6,7 @@ receiveSocketObject = function(object) {
   if(object.document_html){
     // New page
     document.body.innerHTML = object.document_html;
-    SOCKET.reset_module_listener();
+    SOCKET.resetModuleListener();
   }
   if(object.script){
     eval(object.script);
@@ -22,7 +22,7 @@ onSocketOpen = function(){
 }
 
 onSocketMessage = function (event) {
-  SOCKET.module_listener(event);
+  SOCKET.moduleListener(event);
     
   try {
     var object = JSON.parse(event.data);
@@ -41,13 +41,13 @@ class ClientSocket {
     this.moduleSocketListener = function(){};
   }
   
-  module_listener(event){
+  moduleListener(event){
     if (this.moduleSocketListener) {
       this.moduleSocketListener(event);
     }
   }
   
-  reset_module_listener(){    
+  resetModuleListener(){    
     this.moduleSocketListener = function(){};    
   }
     
@@ -60,6 +60,7 @@ class ClientSocket {
   }
 }
 
+//var SOCKET = new ClientSocket('ws://192.168.1.229:25565');
 var SOCKET = new ClientSocket('ws://yoannbourse.com:25565/');
 </script>
 <script src="client_library.js"></script>

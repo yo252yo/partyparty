@@ -26,7 +26,12 @@ drawServerInformation = function(event){
   if (coordinates.length == 2){
     drawSquare(coordinates[0], coordinates[1]);
     startTime = new Date();
+  } else if (event.data.startsWith("Victory")) {
+    alert(event.data);
   }
 }
+console.log(SOCKET);
+
+document.getElementById('div').innerHTML = "";
 
 SOCKET.plugModuleListener(drawServerInformation);
