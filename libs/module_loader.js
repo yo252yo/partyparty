@@ -36,6 +36,10 @@ class ModuleLoader {
       ModuleLoader.loadModule('minigames', name);
     }, 5000);
   }
+  
+  static endMinigame(){
+      ModuleLoader.loadModule("maxigames", "minigamechoser");
+  }
 }
 
 module.exports = ModuleLoader;

@@ -3,6 +3,7 @@ console.log("Minigame TEST loaded");
 // Paths are relative because executed from module_loader.js
 var ServerSocket = require('./server_socket.js');
 var AllPlayers = require('./all_players.js');
+var ModuleLoader = require('./module_loader.js');
 
 
 
@@ -23,6 +24,7 @@ var players = AllPlayers.getAllIps();
 
 var scores = {};
 
+// This is not very resilient to improper inputs, we should fix it.
 var listener = function (event) {
   var score = event.data;
   var ip = event.target._sender._socket.remoteAddress;
@@ -50,4 +52,5 @@ var endGame = function(){
   }
   
   AllPlayers.broadcastMessage("Victory of " + argMinScore);
+  ModuleLoader.endMinigame();
 }

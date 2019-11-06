@@ -10,7 +10,7 @@ class ServerSocket {
     } else if (event.data == 'Im a new client'){
       // This goes back to title screen every time a new player joins, which is not ideal.
       // Ideally you'd send the title screen only to them.
-      ModuleLoader.loadModule("maxigames", "minigamechoser");
+      ModuleLoader.endMinigame();
     } else {
       console.log("received:" + event.data);
     }    
