@@ -56,4 +56,3 @@ class ClientSocket {
   }
 }
 
-ClientSocket.initializeToIp('ws://192.168.1.229:25565');
