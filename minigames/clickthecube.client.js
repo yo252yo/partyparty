@@ -1,9 +1,10 @@
+var startTime;
 
-clickObjective = function (){
+var clickObjective = function (){
   alert("Done!");
   var duration = (new Date() - startTime);
   console.log("Sending" + duration);
-  SOCKET.send(duration);
+  ClientSocket.send(duration);
 }
 
 var drawSquare = function(x,y){
@@ -21,8 +22,8 @@ var drawSquare = function(x,y){
 	document.body.appendChild(node);
 }
 
-drawServerInformation = function(event){ 
-  coordinates = event.data.split("/");
+var drawServerInformation = function(event){ 
+  var coordinates = event.data.split("/");
   if (coordinates.length == 2){
     drawSquare(coordinates[0], coordinates[1]);
     startTime = new Date();
@@ -30,8 +31,7 @@ drawServerInformation = function(event){
     alert(event.data);
   }
 }
-console.log(SOCKET);
 
 document.getElementById('div').innerHTML = "";
 
-SOCKET.plugModuleListener(drawServerInformation);
+ClientSocket.plugModuleListener(drawServerInformation);

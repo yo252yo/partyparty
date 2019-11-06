@@ -4,8 +4,12 @@ module.exports = function(APPLICATION) {
     res.sendfile('client.html');
   });
 
-  APPLICATION.get('/client_library.js', function(req, res, next){
-    res.sendfile('client_library.js');
+  APPLICATION.get('/client/client_library.js', function(req, res, next){
+    res.sendfile('client/client_library.js');
+  });
+  
+  APPLICATION.get('/client/client_socket.js', function(req, res, next){
+    res.sendfile('client/client_socket.js');
   });
 
   var on_socket_connection = function(webSocket, request) {

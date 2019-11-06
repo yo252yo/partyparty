@@ -1,73 +1,10 @@
 <html>
 <head>
-<script>
-
-receiveSocketObject = function(object) {
-  if(object.document_html){
-    // New page
-    document.body.innerHTML = object.document_html;
-    SOCKET.resetModuleListener();
-  }
-  if(object.script){
-    eval(object.script);
-  }
-}
-
-receiveSocketText = function(text){
-  console.log(text);
-}
-
-onSocketOpen = function(){
-  SOCKET.send('Im a new client');
-}
-
-onSocketMessage = function (event) {
-  SOCKET.moduleListener(event);
-    
-  try {
-    var object = JSON.parse(event.data);
-    receiveSocketObject(object);
-  }
-  catch(error) {
-    receiveSocketText(event.data);
-  }
-}
-
-class ClientSocket {
-  constructor(ip) {
-    this.webSocket = new WebSocket(ip);
-    this.webSocket.onopen = onSocketOpen;
-    this.webSocket.onmessage = onSocketMessage;      
-    this.moduleSocketListener = function(){};
-  }
-  
-  moduleListener(event){
-    if (this.moduleSocketListener) {
-      this.moduleSocketListener(event);
-    }
-  }
-  
-  resetModuleListener(){    
-    this.moduleSocketListener = function(){};    
-  }
-    
-  send(message) {
-    this.webSocket.send(message);    
-  }
-  
-  plugModuleListener(listener){
-    this.moduleSocketListener = listener;
-  }
-}
-
-var SOCKET = new ClientSocket('ws://192.168.1.229:25565');
-//var SOCKET = new ClientSocket('ws://yoannbourse.com:25565/');
-</script>
-<script src="client_library.js"></script>
+<script src="client/client_library.js"></script>
+<script src="client/client_socket.js"></script>
 </head>
 <body>
 <h1>This is the default empty client page for PartyParty</h1>
-You should never have seen this.<br />
-<input type="button" value="clickthecube" onclick="SOCKET.send('start_clickthecube');" />
+You should never have seen this.
 </body>
 </html>
