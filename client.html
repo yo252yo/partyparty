@@ -1,0 +1,72 @@
+<html>
+<head>
+<script>
+
+receiveSocketObject = function(object) {
+  if(object.document_html){
+    // New page
+    document.body.innerHTML = object.document_html;
+    SOCKET.reset_module_listener();
+  }
+  if(object.script){
+    eval(object.script);
+  }
+}
+
+receiveSocketText = function(text){
+  console.log(text);
+}
+
+onSocketOpen = function(){
+  SOCKET.send('Im a new client');
+}
+
+onSocketMessage = function (event) {
+  SOCKET.module_listener(event);
+    
+  try {
+    var object = JSON.parse(event.data);
+    receiveSocketObject(object);
+  }
+  catch(error) {
+    receiveSocketText(event.data);
+  }
+}
+
+class ClientSocket {
+  constructor(ip) {
+    this.webSocket = new WebSocket(ip);
+    this.webSocket.onopen = onSocketOpen;
+    this.webSocket.onmessage = onSocketMessage;      
+    this.moduleSocketListener = function(){};
+  }
+  
+  module_listener(event){
+    if (this.moduleSocketListener) {
+      this.moduleSocketListener(event);
+    }
+  }
+  
+  reset_module_listener(){    
+    this.moduleSocketListener = function(){};    
+  }
+    
+  send(message) {
+    this.webSocket.send(message);    
+  }
+  
+  plugModuleListener(listener){
+    this.moduleSocketListener = listener;
+  }
+}
+
+var SOCKET = new ClientSocket('ws://192.168.1.229:25565');
+</script>
+<script src="client_library.js"></script>
+</head>
+<body>
+<h1>This is the default empty client page for PartyParty</h1>
+You should never have seen this.<br />
+<input type="button" value="start game" onclick="SOCKET.send('start_test');" />
+</body>
+</html>
