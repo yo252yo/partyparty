@@ -10,37 +10,47 @@ app.get('/', function(req, res, next){
 app.get('/client_library.js', function(req, res, next){
   res.sendfile('client_library.js');
 });
- 
-var ALL_WEBSOCKETS = expressWs.getWss('/');
 
-var broadcastMessage = function (msg) {
-  //console.log("BC:" + msg);
-	ALL_WEBSOCKETS.clients.forEach(function (client) {
-	  client.send(msg);
-	});  
+
+
+class Players {
+  constructor() {
+    this.all_websockets = expressWs.getWss('/');
+  }  
+
+  broadcastMessage(msg) {
+    //console.log("BC:" + msg);
+    this.all_websockets.clients.forEach(function (client) {
+      client.send(msg);
+    });  
+  }
+    
+  getAllAsString() {
+    var result  = "";
+    this.all_websockets.forEach(function (client) {
+      result += client._socket.remoteAddress;
+      result += "//";
+    });  
+    return result;
+  }  
 }
 
-var getAllPlayers = function () {
-  var result  = "";
-	ALL_WEBSOCKETS.clients.forEach(function (client) {
-	  result += client._socket.remoteAddress;
-    result += "//";
-	});  
-  return result;
-}
+var PLAYERS = new Players();
+
+
 
 var loadMinigame = function (name) {     
   var setup = {
     document_html: fs.readFileSync('./minigames/' +  name + '.setup.html').toString()
   };    
-  broadcastMessage(JSON.stringify(setup));
+  PLAYERS.broadcastMessage(JSON.stringify(setup));
   
   setTimeout(function() {
     var page = {
       document_html: fs.readFileSync('./minigames/' +  name + '.html').toString(),
       script: fs.readFileSync('./minigames/' +  name + '.client.js').toString()
     };
-    broadcastMessage(JSON.stringify(page));  
+    PLAYERS.broadcastMessage(JSON.stringify(page));  
     eval(fs.readFileSync('./minigames/' +  name + '.server.js').toString());
   }, 5000);
 
@@ -70,11 +80,9 @@ class ServerSocket {
   }
 }
 
-
-
 var on_socket_connection = function(webSocket, request) {
   serverSocket = new ServerSocket(webSocket);
-  broadcastMessage("Now playing: " + getAllPlayers());  
+  PLAYERS.broadcastMessage("Now playing: " + PLAYERS.getAllAsString());  
 };
 
 app.ws('/', on_socket_connection);
