@@ -19,17 +19,16 @@ setTimeout(function(){
   }
 }, 15000);
 
-// This IP based approach doesnt allow for two players on the same IP, to be replaced ASAP.
-var players = AllPlayers.getAllIps();
+var players = AllPlayers.getAllIds();
 
 var scores = {};
 
-var listener = function (event) {
+var listener = function (event, webSocket) {
   if (event.data.split("|")[0] == "DurationToClick"){
     var score = event.data.split("|")[1];
-    var ip = event.target._sender._socket.remoteAddress;
-    console.log(ip + " got " + score);
-    scores[ip] = score;
+    var id = webSocket.player_id;
+    console.log(id + " got " + score);
+    scores[id] = score;
     
     if (Object.keys(scores).length == players.length) {
       endGame();
@@ -45,10 +44,10 @@ var endGame = function(){
   var minScore = 20000;
   var argMinScore = "Noone";
   
-  for (var ip in scores){
-    if (scores[ip] < minScore){
-      minScore = scores[ip];
-      argMinScore = ip;
+  for (var id in scores){
+    if (scores[id] < minScore){
+      minScore = scores[id];
+      argMinScore = id;
     }
   }
   

@@ -17,13 +17,21 @@ class ClientSocket {
     }
   }
 
-  static receiveSocketText(text){
-    console.log(text);
+  static receiveSocketText(text){    
+    if (event.data.split("|")[0] == "HereIsYourId"){
+      ClientSocket.webSocket.player_id = event.data.split("|")[1];
+      console.log("ID received:" + ClientSocket.webSocket.player_id);
+    }
+    else {
+      console.log(text);
+    }
   }
   
-  static onSocketMessage(event) {
-    ClientSocket.executeModuleListener(event);
-      
+  static getPlayerId() {
+    return ClientSocket.webSocket.player_id;
+  }
+  
+  static onSocketMessage(event) {      
     try {
       var object = JSON.parse(event.data);
       ClientSocket.receiveSocketObject(object);
@@ -31,6 +39,8 @@ class ClientSocket {
     catch(error) {
       ClientSocket.receiveSocketText(event.data);
     }
+    
+    ClientSocket.executeModuleListener(event);
   }
 
   static onSocketOpen(){

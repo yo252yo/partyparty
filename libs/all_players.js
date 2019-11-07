@@ -32,6 +32,14 @@ class AllPlayers {
     });  
     return result;
   }
+  
+  static getAllIds() {
+    var result  = [];
+    AllPlayers.doToAllClients(function (client) {
+      result.push(client.player_id);
+    });  
+    return result;
+  }
 }
 
 module.exports = AllPlayers;
