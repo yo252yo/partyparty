@@ -36,11 +36,22 @@ var giveSecondClue = function() {
   var answer_split = answer.split("");
   
   var clue = "";
-  for (var i = 0; i < answer_masked.length; i++){
-    if (Math.random() < 0.2){
-      clue += answer_split[i];
-    } else {
-      clue += answer_masked[i];
+  var hint = 0;
+  while(hint <= 3) {
+    clue = "";
+    hint = 0;
+    
+    for (var i = 0; i < answer_masked.length; i++){
+      if (Math.random() < 0.15){
+        clue += answer_split[i];
+        hint ++;
+      } else {
+        clue += answer_masked[i];
+      }
+    }
+    
+    if (answer.length < 5) {
+      break;
     }
   }
   
