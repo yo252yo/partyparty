@@ -6,4 +6,3 @@ var AllPlayers = require('./libs/all_players.js');
 AllPlayers.bindExpressWs(ExpressWs);
 
 require('./libs/setup_endpoints.js')(APPLICATION);
-

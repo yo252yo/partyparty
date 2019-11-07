@@ -40,6 +40,23 @@ class AllPlayers {
     });  
     return result;
   }
+  
+  static getNewId(){
+    var nouns = require('../themes/nouns/communist.js');
+    var modifiers = require('../themes/modifiers.js');
+    var rollProposal = function(){
+      return modifiers[Math.floor(Math.random()*modifiers.length)] + nouns[Math.floor(Math.random()*nouns.length)];
+    }
+    
+    var proposal = rollProposal();
+    while (proposal in AllPlayers.usedIds){
+      proposal = rollProposal();
+    }
+    AllPlayers.usedIds.push(proposal);
+    return proposal;
+  }
 }
+
+AllPlayers.usedIds = [];
 
 module.exports = AllPlayers;

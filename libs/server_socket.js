@@ -46,11 +46,14 @@ class ServerSocket {
   constructor(webSocket) {
     this.webSocket = webSocket;    
     this.webSocket.onmessage = function (event) { ServerSocket.onSocketMessage(event, webSocket); };
-    this.webSocket.player_id = "Player_" + ServerSocket.next_player_id;
-    ServerSocket.next_player_id = ServerSocket.next_player_id + 1;
+    this.webSocket.connection_id = ServerSocket.next_player_id;
+    ServerSocket.next_connection_id ++;
+    
+    var AllPlayers = require('./all_players.js');
+    this.webSocket.player_id = AllPlayers.getNewId();    
   }  
 }
 
-ServerSocket.next_player_id = 0;
+ServerSocket.next_connection_id = 0;
 
 module.exports = ServerSocket;
