@@ -8,7 +8,7 @@ var ModuleLoader = require('./module_loader.js');
 
 
 setTimeout(function(){
-  AllPlayers.broadcastMessage(Math.random() + "/" + Math.random());
+  AllPlayers.broadcastMessage("ClickCubeCoordinates", Math.random() + "/" + Math.random());
 }, 5000);
 
 var game_ended = false;
@@ -24,16 +24,17 @@ var players = AllPlayers.getAllIps();
 
 var scores = {};
 
-// This is not very resilient to improper inputs, we should fix it.
 var listener = function (event) {
-  var score = event.data;
-  var ip = event.target._sender._socket.remoteAddress;
-  console.log(ip + " got " + score);
-  scores[ip] = score;
-  
-  if (Object.keys(scores).length == players.length) {
-    endGame();
-  }  
+  if (event.data.split("|")[0] == "DurationToClick"){
+    var score = event.data.split("|")[1];
+    var ip = event.target._sender._socket.remoteAddress;
+    console.log(ip + " got " + score);
+    scores[ip] = score;
+    
+    if (Object.keys(scores).length == players.length) {
+      endGame();
+    }
+  }
 }
 
 ServerSocket.plugModuleListener(listener);
@@ -51,6 +52,6 @@ var endGame = function(){
     }
   }
   
-  AllPlayers.broadcastMessage("Victory of " + argMinScore);
+  AllPlayers.broadcastMessage("VictoryAnnouncement", argMinScore);
   ModuleLoader.endMinigame();
 }

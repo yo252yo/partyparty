@@ -4,7 +4,7 @@ var clickObjective = function (){
   alert("Done!");
   var duration = (new Date() - startTime);
   console.log("Sending" + duration);
-  ClientSocket.send(duration);
+  ClientSocket.send("DurationToClick", duration);
 }
 
 var drawSquare = function(x,y){
@@ -23,11 +23,14 @@ var drawSquare = function(x,y){
 }
 
 var drawServerInformation = function(event){ 
-  var coordinates = event.data.split("/");
-  if (coordinates.length == 2){
-    drawSquare(coordinates[0], coordinates[1]);
-    startTime = new Date();
-  } else if (event.data.startsWith("Victory")) {
+  if (event.data.split("|")[0] == "ClickCubeCoordinates"){
+    var coordinates = event.data.split("|")[1].split("/");
+    if (coordinates.length == 2){
+      drawSquare(coordinates[0], coordinates[1]);
+      startTime = new Date();
+    } 
+  }
+  if (event.data.split("|")[0] == "VictoryAnnouncement"){
     alert(event.data);
   }
 }

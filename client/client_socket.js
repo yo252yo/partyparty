@@ -34,7 +34,7 @@ class ClientSocket {
   }
 
   static onSocketOpen(){
-    ClientSocket.send('Im a new client');
+    ClientSocket.send('NewClientAnnouncement', 'Im a new client');
   }
   
   static executeModuleListener(event){
@@ -47,8 +47,8 @@ class ClientSocket {
     ClientSocket.moduleSocketListener = function(){};    
   }
     
-  static send(message) {
-    ClientSocket.webSocket.send(message);    
+  static send(prefix, message) {
+    ClientSocket.webSocket.send(prefix + "|" + message);    
   }
   
   static plugModuleListener(listener){

@@ -1,13 +1,12 @@
 var ModuleLoader = require('./module_loader.js');
-
+    
 class ServerSocket {
   static onSocketMessage(event) {
     ServerSocket.executeModuleListener(event);
     
-    if (event.data.startsWith("start_")){
-      var parsed = event.data.split("_");
-      ModuleLoader.loadMinigame(parsed[1]);
-    } else if (event.data == 'Im a new client'){
+    if (event.data.split("|")[0] == "StartMinigame"){
+      ModuleLoader.loadMinigame(event.data.split("|")[1]);
+    } else if (event.data.split("|")[0] == "NewClientAnnouncement"){
       // This goes back to title screen every time a new player joins, which is not ideal.
       // Ideally you'd send the title screen only to them.
       ModuleLoader.endMinigame();

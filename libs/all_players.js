@@ -11,10 +11,10 @@ class AllPlayers {
     });
   }
  
-  static broadcastMessage(msg) {
+  static broadcastMessage(prefix, msg) {
     //console.log("BC:" + msg);
     AllPlayers.doToAllClients(function (client) {
-      client.send(msg);
+      client.send(prefix + "|" + msg);
     });  
   }
   
