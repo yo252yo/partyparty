@@ -37,6 +37,7 @@ class ClientSocket {
       ClientSocket.receiveSocketObject(object);
     }
     catch(error) {
+      console.log(error);
       ClientSocket.receiveSocketText(event.data);
     }
     
