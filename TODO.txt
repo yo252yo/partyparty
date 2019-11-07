@@ -1,3 +1,2 @@
-- countdown loader
 - player name
 - scores

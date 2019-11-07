@@ -2,12 +2,12 @@ var Fs = require('fs');
 
 
 class ModuleLoader {
-  static loadModule(folder, name){
+  static loadModule(folder, name, default_script){
     var ServerSocket = require('./server_socket.js');
     ServerSocket.resetModuleListener();
       
     var document_html = "";
-    var script = "";
+    var script = default_script;
     
     if (Fs.existsSync('./' + folder + '/' +  name + '/client.html')){
       document_html = Fs.readFileSync('./' + folder + '/' +  name + '/client.html').toString();
@@ -31,7 +31,7 @@ class ModuleLoader {
 
   static loadMinigame = function (name) { 
     console.log("Starting minigame:" + name);
-    ModuleLoader.loadModule('minigames', name + '/setup');
+    ModuleLoader.loadModule('minigames', name + '/setup', "displayTimer(5);");    
     
     setTimeout(function() {
       ModuleLoader.loadModule('minigames', name);

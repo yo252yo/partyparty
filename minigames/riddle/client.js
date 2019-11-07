@@ -7,6 +7,8 @@ window.sendAnswer = function(){
 
 document.getElementById("answer").focus();
 
+displayTimer(30);
+
 var getServerInformation = function(event){ 
   console.log("Received" + event.data);
   if (event.data.split("|")[0] == "RiddleQuestion"){
@@ -22,4 +24,5 @@ var getServerInformation = function(event){
     alert(event.data.split("|")[1]);
   }
 }
+
 ClientSocket.plugModuleListener(getServerInformation);
