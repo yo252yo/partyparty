@@ -9,11 +9,11 @@ class ModuleLoader {
     var document_html = "";
     var script = "";
     
-    if (Fs.existsSync('./' + folder + '/' +  name + '.html')){
-      document_html = Fs.readFileSync('./' + folder + '/' +  name + '.html').toString();
+    if (Fs.existsSync('./' + folder + '/' +  name + '/client.html')){
+      document_html = Fs.readFileSync('./' + folder + '/' +  name + '/client.html').toString();
     }
-    if (Fs.existsSync('./' + folder + '/' +  name + '.client.js')){
-      script = Fs.readFileSync('./' + folder + '/' +  name + '.client.js').toString();
+    if (Fs.existsSync('./' + folder + '/' +  name + '/client.js')){
+      script = Fs.readFileSync('./' + folder + '/' +  name + '/client.js').toString();
     }
 
     var page = {
@@ -24,13 +24,13 @@ class ModuleLoader {
     var AllPlayers = require('./all_players.js');
     AllPlayers.broadcastObject(page);
     
-    if (Fs.existsSync('./' + folder + '/' +  name + '.server.js')){
-      eval(Fs.readFileSync('./' + folder + '/' +  name + '.server.js').toString());
+    if (Fs.existsSync('./' + folder + '/' +  name + '/server.js')){
+      eval(Fs.readFileSync('./' + folder + '/' +  name + '/server.js').toString());
     }
   }
 
   static loadMinigame = function (name) { 
-    ModuleLoader.loadModule('minigames', name + '.setup');
+    ModuleLoader.loadModule('minigames', name + '/setup');
     
     setTimeout(function() {
       ModuleLoader.loadModule('minigames', name);
