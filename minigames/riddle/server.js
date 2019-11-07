@@ -12,7 +12,40 @@ setTimeout(function(){
   if (! game_ended) {
     endGame();
   }
-}, 25000);
+}, 30000);
+
+setTimeout(function(){
+  if (! game_ended) {
+    giveFirstClue();
+  }
+}, 10000);
+
+setTimeout(function(){
+  if (! game_ended) {
+    giveSecondClue();
+  }
+}, 20000);
+
+var giveFirstClue = function() {
+  var clue = answer.replace(/[a-zA-Z]/g, "-");
+  AllPlayers.broadcastMessage("RiddleClue", clue);
+}
+
+var giveSecondClue = function() {
+  var answer_masked = answer.replace(/[a-zA-Z]/g, "-").split("");
+  var answer_split = answer.split("");
+  
+  var clue = "";
+  for (var i = 0; i < answer_masked.length; i++){
+    if (Math.random() < 0.2){
+      clue += answer_split[i];
+    } else {
+      clue += answer_masked[i];
+    }
+  }
+  
+  AllPlayers.broadcastMessage("RiddleClue", clue);
+}
 
 var httpRequestCallback = function(html){
   try {

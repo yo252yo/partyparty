@@ -12,6 +12,9 @@ var getServerInformation = function(event){
   if (event.data.split("|")[0] == "RiddleQuestion"){
     document.getElementById("riddle").innerHTML = event.data.split("|")[1];
   } 
+  if (event.data.split("|")[0] == "RiddleClue"){
+    document.getElementById("clue").innerHTML = event.data.split("|")[1];
+  } 
   if (event.data.split("|")[0] == "VictoryAnnouncement"){
     alert(event.data);
   }
