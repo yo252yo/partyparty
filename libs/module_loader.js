@@ -30,12 +30,20 @@ class ModuleLoader {
   }
 
   static loadMinigame = function (name) { 
+    console.log("Starting minigame:" + name);
     ModuleLoader.loadModule('minigames', name + '/setup');
     
     setTimeout(function() {
       ModuleLoader.loadModule('minigames', name);
     }, 5000);
   }
+  
+  static loadRandomMinigame = function (){
+    var games = Fs.readdirSync("./minigames");
+    var name = games[Math.floor(Math.random() * games.length)];
+    ModuleLoader.loadMinigame(name);
+  }
+  
   
   static endMinigame(){
       ModuleLoader.loadModule("maxigames", "minigamechoser");

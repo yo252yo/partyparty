@@ -31,6 +31,8 @@ class ServerSocket {
   static onSocketMessage(event, webSocket) {  
     if (event.data.split("|")[0] == "StartMinigame"){
       ModuleLoader.loadMinigame(event.data.split("|")[1]);
+    } else if (event.data.split("|")[0] == "StartRandomMinigame"){
+      ModuleLoader.loadRandomMinigame();
     } else if (event.data.split("|")[0] == "NewClientAnnouncement"){
       ServerSocket.handleNewPlayer(webSocket); 
     } else {
