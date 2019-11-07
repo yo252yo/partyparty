@@ -39,6 +39,9 @@ class ModuleLoader {
   
   static endMinigame(){
       ModuleLoader.loadModule("maxigames", "minigamechoser");
+      // Remind everyone of player list 
+      var AllPlayers = require('./all_players.js');
+      AllPlayers.broadcastMessage("CurrentPlayerList", AllPlayers.getAllIds().toString());        
   }
 }
 
