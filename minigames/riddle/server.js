@@ -15,13 +15,13 @@ setTimeout(function(){
 }, 30000);
 
 setTimeout(function(){
-  if (! game_ended) {
+  if (! game_ended && answer) {
     giveFirstClue();
   }
 }, 10000);
 
 setTimeout(function(){
-  if (! game_ended) {
+  if (! game_ended && answer) {
     giveSecondClue();
   }
 }, 20000);
