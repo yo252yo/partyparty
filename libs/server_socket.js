@@ -1,3 +1,5 @@
+var ModuleLoader = require('./module_loader.js');
+
 class ServerSocket {
   // Static and class-shared
   static executeModuleListener(event, webSocket){
@@ -14,17 +16,23 @@ class ServerSocket {
     ServerSocket.moduleSocketListener = listener;
   }  
   
-  // The event listener is static because it can be called in any context, that's why we pass it the individual webSocket as parameter.
-  static onSocketMessage(event, webSocket) {
-    var ModuleLoader = require('./module_loader.js');
-  
-    if (event.data.split("|")[0] == "StartMinigame"){
-      ModuleLoader.loadMinigame(event.data.split("|")[1]);
-    } else if (event.data.split("|")[0] == "NewClientAnnouncement"){
+  static handleNewPlayer(webSocket){
       // This goes back to title screen every time a new player joins, which is not ideal.
       // Ideally you'd send the title screen only to them.
       ModuleLoader.endMinigame();
       webSocket.send("HereIsYourId" + "|" + webSocket.player_id);
+      
+      var AllPlayers = require('./all_players.js');
+      console.log("Now playing:" + AllPlayers.getAllIds().toString());  
+      AllPlayers.broadcastMessage("CurrentPlayerList", AllPlayers.getAllIds().toString());     
+  }
+  
+  // The event listener is static because it can be called in any context, that's why we pass it the individual webSocket as parameter.
+  static onSocketMessage(event, webSocket) {  
+    if (event.data.split("|")[0] == "StartMinigame"){
+      ModuleLoader.loadMinigame(event.data.split("|")[1]);
+    } else if (event.data.split("|")[0] == "NewClientAnnouncement"){
+      ServerSocket.handleNewPlayer(webSocket); 
     } else {
       console.log("received:" + event.data);
     }    

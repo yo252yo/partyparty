@@ -15,9 +15,6 @@ module.exports = function(APPLICATION) {
   var on_socket_connection = function(webSocket, request) {
     var ServerSocket = require('./server_socket.js');
     var newSocket = new ServerSocket(webSocket);
-    
-    var AllPlayers = require('./all_players.js');    
-    AllPlayers.broadcastMessage("CurrentPlayerList", PLAYERS.getAllIps().toString());  
   };
 
   APPLICATION.ws('/', on_socket_connection);
