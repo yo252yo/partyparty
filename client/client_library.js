@@ -6,21 +6,21 @@ function appendToBody(text){
 	document.body.appendChild(node);
 }
 
+function updateTimer(seconds){    
+  if (document.getElementById("timer")){
+    document.getElementById("timer").innerHTML = seconds + "s";
+  }
+}
 
 function displayTimer(seconds) {
   clearInterval();
   var timer = seconds;
   
-  var updateTimer = function (){    
-    if (document.getElementById("timer")){
-      document.getElementById("timer").innerHTML = timer + "s";
-    }
-  }
-  updateTimer();
+  updateTimer(timer);
   
   var tickInterval = function () {
     timer = timer - 1;
-    updateTimer();
+    updateTimer(timer);
     if (timer <= 0) {
       clearInterval();
     }
