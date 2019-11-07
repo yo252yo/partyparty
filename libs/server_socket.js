@@ -29,10 +29,12 @@ class ServerSocket {
   
   // The event listener is static because it can be called in any context, that's why we pass it the individual webSocket as parameter.
   static onSocketMessage(event, webSocket) {  
+    console.log("c");
     if (event.data.split("|")[0] == "StartMinigame"){
       ModuleLoader.loadMinigame(event.data.split("|")[1]);
     } else if (event.data.split("|")[0] == "NewClientAnnouncement"){
       ServerSocket.handleNewPlayer(webSocket); 
+      console.log("d");
     } else {
       console.log("received:" + event.data);
     }    
@@ -42,12 +44,14 @@ class ServerSocket {
   
   // Individual
   constructor(webSocket) {
+    console.log("b");
     this.webSocket = webSocket;    
     this.webSocket.onmessage = function (event) { ServerSocket.onSocketMessage(event, webSocket); };
     this.webSocket.player_id = "Player_" + ServerSocket.next_player_id;
     ServerSocket.next_player_id = ServerSocket.next_player_id + 1;
   }  
 }
+console.log("a");
 
 ServerSocket.next_player_id = 0;
 
