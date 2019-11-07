@@ -43,8 +43,7 @@ class ModuleLoader {
     var name = games[Math.floor(Math.random() * games.length)];
     ModuleLoader.loadMinigame(name);
   }
-  
-  
+    
   static endMinigame(){
       ModuleLoader.loadModule("maxigames", "minigamechoser");
       // Remind everyone of player list 

@@ -1,10 +1,6 @@
 install node, then 
 
-npm install express
-
-npm install express-ws
-
-npm install fs
+npm install express express-ws fs request request-promise cheerio
 
 then 
 
