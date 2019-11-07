@@ -1,7 +1,25 @@
-var ModuleLoader = require('./module_loader.js');
-    
 class ServerSocket {
-  static onSocketMessage(event) {
+  
+  // Static and class-shared
+  static executeModuleListener(event){
+    if (ServerSocket.moduleSocketListener) {
+      ServerSocket.moduleSocketListener(event);
+    }
+  }
+  
+  static resetModuleListener(){    
+    ServerSocket.moduleSocketListener = function(event){};    
+  }
+    
+  static plugModuleListener(listener){
+    ServerSocket.moduleSocketListener = listener;
+  }  
+  
+  
+  // Individual
+  onSocketMessage(event) {
+    var ModuleLoader = require('./module_loader.js');
+  
     ServerSocket.executeModuleListener(event);
     
     if (event.data.split("|")[0] == "StartMinigame"){
@@ -15,25 +33,10 @@ class ServerSocket {
     }    
   }
   
-  static assignWebsocket(webSocket){
-    ServerSocket.webSocket = webSocket;
-    ServerSocket.webSocket.onmessage = ServerSocket.onSocketMessage;
-    resetModuleListener();
-  }
-  
-  static executeModuleListener(event){
-    if (ServerSocket.moduleSocketListener) {
-      ServerSocket.moduleSocketListener(event);
-    }
-  }
-  
-  static resetModuleListener(){    
-    ServerSocket.moduleSocketListener = function(event){};    
-  }
-    
-  static plugModuleListener(listener){
-    ServerSocket.moduleSocketListener = listener;
-  }
+  constructor(webSocket) {
+    this.webSocket = webSocket;
+    this.webSocket.onmessage = this.onSocketMessage;
+  }  
 }
 
 module.exports = ServerSocket;
