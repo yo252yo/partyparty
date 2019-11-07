@@ -99,7 +99,7 @@ var endGame = function(winner){
 }
 
 function sanitize(string){
-  return string.replace(" ", "").toLowerCase();
+  return string.replace(" ", "").replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").toLowerCase();
 }
 
 var listener = function (event, webSocket) {
@@ -107,7 +107,7 @@ var listener = function (event, webSocket) {
     var proposal = event.data.split("|")[1];
     console.log(webSocket.player_id + " proposes " + proposal);
     
-    if (sanitize(proposal) == sanitize(answer) || sanitize(proposal) + "." == sanitize(answer)) {
+    if (sanitize(proposal) == sanitize(answer)) {
       endGame(webSocket.player_id);
     }
   }
