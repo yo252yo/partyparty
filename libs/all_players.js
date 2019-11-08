@@ -46,6 +46,24 @@ class AllPlayers {
     AllPlayers.scores[id] = AllPlayers.getScore(id) + increment;
   }
   
+  static initializeModule(){
+    AllPlayers.usedIds = [];
+    AllPlayers.theme = "";
+    AllPlayers.scores = {};    
+  }
+  
+  static resetWholeGame(){
+    AllPlayers.initializeModule();
+    AllPlayers.pickTheme();
+    
+    AllPlayers.doToAllClients(function (client) {
+      client.player_id = AllPlayers.getNewId();
+      
+      var ServerSocket = require('./server_socket.js');
+      ServerSocket.handleNewPlayer(client);
+    });      
+  }
+  
   static getAllIds() {
     var result  = [];
     AllPlayers.doToAllClients(function (client) {
@@ -76,8 +94,6 @@ class AllPlayers {
   }
 }
 
-AllPlayers.usedIds = [];
-AllPlayers.theme = "";
-AllPlayers.scores = {};
+AllPlayers.initializeModule();
 
 module.exports = AllPlayers;

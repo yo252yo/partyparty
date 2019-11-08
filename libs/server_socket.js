@@ -29,19 +29,30 @@ class ServerSocket {
   
   // The event listener is static because it can be called in any context, that's why we pass it the individual webSocket as parameter.
   static onSocketMessage(event, webSocket) {  
-    if (event.data.split("|")[0] == "StartMinigame"){
-      ModuleLoader.loadMinigame(event.data.split("|")[1]);
-    } else if (event.data.split("|")[0] == "StartRandomMinigame"){
-      ModuleLoader.loadRandomMinigame();
-    } else if (event.data.split("|")[0] == "NewClientAnnouncement"){
-      ServerSocket.handleNewPlayer(webSocket); 
-    } else if (event.data.split("|")[0] == "RerollNameRequest"){
-      var AllPlayers = require('./all_players.js');
-      webSocket.player_id = AllPlayers.getNewId();
-      ServerSocket.handleNewPlayer(webSocket); 
-    } else {
-      console.log("received:" + event.data);
-    }    
+    // this should be a switch
+    
+    switch(event.data.split("|")[0]) {
+      case "StartMinigame":
+        ModuleLoader.loadMinigame(event.data.split("|")[1]);
+        break;
+      case "StartRandomMinigame":
+        ModuleLoader.loadRandomMinigame();
+        break;
+      case "NewClientAnnouncement":
+        ServerSocket.handleNewPlayer(webSocket); 
+        break;
+      case "ResetWholeGame":
+        var AllPlayers = require('./all_players.js');
+        AllPlayers.resetWholeGame();
+        break;
+      case "RerollNameRequest":
+        var AllPlayers = require('./all_players.js');
+        webSocket.player_id = AllPlayers.getNewId();
+        ServerSocket.handleNewPlayer(webSocket); 
+        break;
+      default:
+        console.log("received:" + event.data);
+    }
     
     ServerSocket.executeModuleListener(event, webSocket);
   }
@@ -54,7 +65,7 @@ class ServerSocket {
     ServerSocket.next_connection_id ++;
     
     var AllPlayers = require('./all_players.js');
-    this.webSocket.player_id = AllPlayers.getNewId();    
+    this.webSocket.player_id = AllPlayers.getNewId();
   }  
 }
 
