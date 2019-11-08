@@ -20,9 +20,10 @@ function displayTimer(seconds) {
   
   var tickInterval = function () {
     timer = timer - 1;
-    updateTimer(timer);
     if (timer <= 0) {
       clearInterval();
+    } else {
+      updateTimer(timer);
     }
   }
   setInterval(tickInterval, 1000);  
