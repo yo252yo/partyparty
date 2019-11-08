@@ -3,6 +3,7 @@ console.log("Minigame TEST loaded");
 // Paths are relative because executed from module_loader.js
 var ServerSocket = require('./server_socket.js');
 var AllPlayers = require('./all_players.js');
+var GameEngine = require('./game_engine.js');
 var ModuleLoader = require('./module_loader.js');
 
 
@@ -19,7 +20,7 @@ setTimeout(function(){
   }
 }, 15000);
 
-var players = AllPlayers.getAllIds();
+var players = GameEngine.getAllIds();
 
 var scores = {};
 
@@ -52,7 +53,7 @@ var endGame = function(){
   }
   
   if (argMinScore != "Noone"){
-    AllPlayers.changeScore(argMinScore, 1);
+    GameEngine.changeScore(argMinScore, 1);
   }
   
   AllPlayers.broadcastMessage("VictoryAnnouncement", argMinScore);

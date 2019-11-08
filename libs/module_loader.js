@@ -48,7 +48,8 @@ class ModuleLoader {
       ModuleLoader.loadModule("maxigames", "minigamechoser");
       // Remind everyone of player list 
       var AllPlayers = require('./all_players.js');
-      AllPlayers.broadcastMessage("CurrentPlayerList", AllPlayers.getAllIds().toString());        
+      var GameEngine = require('./game_engine.js');
+      AllPlayers.broadcastMessage("CurrentPlayerList", GameEngine.getAllIds().toString());        
   }
 }
 

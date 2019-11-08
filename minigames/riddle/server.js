@@ -2,6 +2,7 @@
 var Request = require('request-promise');
 var Cheerio = require('cheerio');
 var AllPlayers = require('./all_players.js');
+var GameEngine = require('./game_engine.js');
 var ModuleLoader = require('./module_loader.js');
 var ServerSocket = require('./server_socket.js');
 
@@ -92,7 +93,7 @@ var endGame = function(winner){
   if (! winner){
     winner = "Noone";
   } else {
-    AllPlayers.changeScore(winner, 1);
+    GameEngine.changeScore(winner, 1);
   }
   
   AllPlayers.broadcastMessage("VictoryAnnouncement", winner);

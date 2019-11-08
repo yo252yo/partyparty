@@ -22,9 +22,11 @@ class ServerSocket {
       ModuleLoader.endMinigame();
       webSocket.send("HereIsYourId" + "|" + webSocket.player_id);
       
+      var GameEngine = require('./game_engine.js');
+      console.log("Now playing:" + GameEngine.getAllIds().toString());  
+      
       var AllPlayers = require('./all_players.js');
-      console.log("Now playing:" + AllPlayers.getAllIds().toString());  
-      AllPlayers.broadcastMessage("CurrentPlayerList", AllPlayers.getAllIds().toString());     
+      AllPlayers.broadcastMessage("CurrentPlayerList", GameEngine.getAllIds().toString());     
   }
   
   // The event listener is static because it can be called in any context, that's why we pass it the individual webSocket as parameter.
@@ -42,12 +44,12 @@ class ServerSocket {
         ServerSocket.handleNewPlayer(webSocket); 
         break;
       case "ResetWholeGame":
-        var AllPlayers = require('./all_players.js');
-        AllPlayers.resetWholeGame();
+        var GameEngine = require('./game_engine.js');
+        GameEngine.resetWholeGame();
         break;
       case "RerollNameRequest":
-        var AllPlayers = require('./all_players.js');
-        webSocket.player_id = AllPlayers.getNewId();
+        var GameEngine = require('./game_engine.js');
+        webSocket.player_id = GameEngine.getNewId();
         ServerSocket.handleNewPlayer(webSocket); 
         break;
       default:
@@ -64,8 +66,8 @@ class ServerSocket {
     this.webSocket.connection_id = ServerSocket.next_player_id;
     ServerSocket.next_connection_id ++;
     
-    var AllPlayers = require('./all_players.js');
-    this.webSocket.player_id = AllPlayers.getNewId();
+    var GameEngine = require('./game_engine.js');
+    this.webSocket.player_id = GameEngine.getNewId();
   }  
 }
 
