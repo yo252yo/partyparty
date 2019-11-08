@@ -35,10 +35,21 @@ class AllPlayers {
     return result;
   }
   
+  static getScore(id) {
+    if (id in AllPlayers.scores){
+      return AllPlayers.scores[id];
+    }
+    return 0;
+  }
+  
+  static changeScore(id, increment) {
+    AllPlayers.scores[id] = AllPlayers.getScore(id) + increment;
+  }
+  
   static getAllIds() {
     var result  = [];
     AllPlayers.doToAllClients(function (client) {
-      result.push(client.player_id);
+      result.push(client.player_id + ":" + parseInt(AllPlayers.getScore(client.player_id)));
     });  
     return result;
   }
@@ -67,5 +78,6 @@ class AllPlayers {
 
 AllPlayers.usedIds = [];
 AllPlayers.theme = "";
+AllPlayers.scores = {};
 
 module.exports = AllPlayers;

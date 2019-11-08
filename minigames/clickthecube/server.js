@@ -51,6 +51,10 @@ var endGame = function(){
     }
   }
   
+  if (argMinScore != "Noone"){
+    AllPlayers.changeScore(argMinScore, 1);
+  }
+  
   AllPlayers.broadcastMessage("VictoryAnnouncement", argMinScore);
   ModuleLoader.endMinigame();
 }

@@ -91,6 +91,8 @@ var endGame = function(winner){
   console.log("Game ended");
   if (! winner){
     winner = "Noone";
+  } else {
+    AllPlayers.changeScore(winner, 1);
   }
   
   AllPlayers.broadcastMessage("VictoryAnnouncement", winner);
