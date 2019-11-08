@@ -1,3 +1,5 @@
+var Fs = require('fs');
+
 class AllPlayers {
   // This is not great but I don't want to have to pass expressWs everywhere.
   // It will probably end up transformed into "initializePlayers" anyway.
@@ -42,7 +44,7 @@ class AllPlayers {
   }
   
   static getNewId(){
-    var nouns = require('../themes/nouns/communist.js');
+    var nouns = require('../themes/nouns/' + AllPlayers.theme + '.js');
     var modifiers = require('../themes/modifiers.js');
     var rollProposal = function(){
       return modifiers[Math.floor(Math.random()*modifiers.length)] + nouns[Math.floor(Math.random()*nouns.length)];
@@ -55,8 +57,15 @@ class AllPlayers {
     AllPlayers.usedIds.push(proposal);
     return proposal;
   }
+  
+  static pickTheme() {
+    var themes = Fs.readdirSync("./themes/nouns/");
+    AllPlayers.theme = themes[Math.floor(Math.random() * themes.length)].split(".")[0]; 
+    console.log("Theme set:" + AllPlayers.theme);
+  }
 }
 
 AllPlayers.usedIds = [];
+AllPlayers.theme = "";
 
 module.exports = AllPlayers;

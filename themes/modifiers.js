@@ -29,5 +29,6 @@ module.exports = [
 "Baby",
 "Slime",
 "Nuclear",
-"Laser"
+"Laser",
+"Quantum"
 ];
