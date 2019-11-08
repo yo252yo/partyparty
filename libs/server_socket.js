@@ -35,6 +35,10 @@ class ServerSocket {
       ModuleLoader.loadRandomMinigame();
     } else if (event.data.split("|")[0] == "NewClientAnnouncement"){
       ServerSocket.handleNewPlayer(webSocket); 
+    } else if (event.data.split("|")[0] == "RerollNameRequest"){
+      var AllPlayers = require('./all_players.js');
+      webSocket.player_id = AllPlayers.getNewId();
+      ServerSocket.handleNewPlayer(webSocket); 
     } else {
       console.log("received:" + event.data);
     }    
