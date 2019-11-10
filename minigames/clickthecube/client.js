@@ -22,19 +22,22 @@ var drawSquare = function(x,y){
 	document.body.appendChild(node);
 }
 
-var drawServerInformation = function(event){ 
-  if (event.data.split("|")[0] == "ClickCubeCoordinates"){
-    var coordinates = event.data.split("|")[1].split("/");
-    if (coordinates.length == 2){
-      drawSquare(coordinates[0], coordinates[1]);
-      startTime = new Date();
-    } 
-  }
-  if (event.data.split("|")[0] == "VictoryAnnouncement"){
-    alert(event.data);
+document.getElementById('div').innerHTML = "";
+
+var moduleListener = function(event){ 
+  switch(event.data.split("|")[0]) {
+    case "ClickCubeCoordinates":
+      var coordinates = event.data.split("|")[1].split("/");
+      if (coordinates.length == 2){
+        drawSquare(coordinates[0], coordinates[1]);
+        startTime = new Date();
+      } 
+      break;
+    case "VictoryAnnouncement":
+      alert(event.data);
+      break;
+    default:
   }
 }
 
-document.getElementById('div').innerHTML = "";
-
-ClientSocket.plugModuleListener(drawServerInformation);
+ClientSocket.plugModuleListener(moduleListener);

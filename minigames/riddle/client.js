@@ -9,20 +9,22 @@ document.getElementById("answer").focus();
 
 displayTimer(30);
 
-var getServerInformation = function(event){ 
-  console.log("Received" + event.data);
-  if (event.data.split("|")[0] == "RiddleQuestion"){
-    document.getElementById("riddle").innerHTML = event.data.split("|")[1];
-  } 
-  if (event.data.split("|")[0] == "RiddleClue"){
-    document.getElementById("clue").innerHTML = event.data.split("|")[1];
-  } 
-  if (event.data.split("|")[0] == "VictoryAnnouncement"){
-    alert(event.data);
-  }
-  if (event.data.split("|")[0] == "AnswerAnnouncement"){
-    alert(event.data.split("|")[1]);
+var moduleListener = function(event){ 
+  switch(event.data.split("|")[0]) {
+    case "RiddleQuestion":
+      document.getElementById("riddle").innerHTML = event.data.split("|")[1];
+      break;
+    case "RiddleClue":
+      document.getElementById("clue").innerHTML = event.data.split("|")[1];
+      break;
+    case "AnswerAnnouncement":
+      alert(event.data.split("|")[1]);
+      break;
+    case "VictoryAnnouncement":
+      alert(event.data);
+      break;
+    default:
   }
 }
 
-ClientSocket.plugModuleListener(getServerInformation);
+ClientSocket.plugModuleListener(moduleListener);

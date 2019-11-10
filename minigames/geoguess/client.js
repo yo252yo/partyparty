@@ -28,16 +28,19 @@ var drawCorrection = function(){
 }
 
 
-var getServerInformation = function(event){ 
+var moduleListener = function(event){ 
   console.log("Received" + event.data);
-  if (event.data.split("|")[0] == "GeoguessCoords"){
-    coordinates = event.data.split("|")[1];
-    document.getElementById("geoframe").src="https://www.gps-coordinates.net/street-view/@" + coordinates + ",h134,p8,z1";
-  }
-  if (event.data.split("|")[0] == "VictoryAnnouncement"){
-    drawCorrection();
-    alert(event.data);
+  switch(event.data.split("|")[0]) {
+    case "GeoguessCoords":
+      coordinates = event.data.split("|")[1];
+      document.getElementById("geoframe").src="https://www.gps-coordinates.net/street-view/@" + coordinates + ",h134,p8,z1";
+      break;
+    case "VictoryAnnouncement":
+      drawCorrection();
+      alert(event.data);
+      break;
+    default:
   }
 }
 
-ClientSocket.plugModuleListener(getServerInformation);
+ClientSocket.plugModuleListener(moduleListener);

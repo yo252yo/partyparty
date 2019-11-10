@@ -17,13 +17,14 @@ class ClientSocket {
     }
   }
 
-  static receiveSocketText(text){    
-    if (event.data.split("|")[0] == "HereIsYourId"){
-      ClientSocket.webSocket.player_id = event.data.split("|")[1];
-      console.log("ID received:" + ClientSocket.webSocket.player_id);
-    }
-    else {
-      console.log(text);
+  static receiveSocketText(text){
+    switch(event.data.split("|")[0]) {
+      case "HereIsYourId":
+        ClientSocket.webSocket.player_id = event.data.split("|")[1];
+        console.log("ID received:" + ClientSocket.webSocket.player_id);
+        break;
+      default:
+        console.log(text);
     }
   }
   
