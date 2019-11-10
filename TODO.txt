@@ -1,1 +1,18 @@
-- scores
+> Figure out github code review
+
+> Minigames
+- countdown (le compte est bon)
+- countdown (lettres)
+- trivia quiz
+- family feud
+- copy uther party (run kitty run)
+- copy mario party
+
+> Features
+- ready check in game loading (with keyboard control)
+- refactor socket parsing with switch
+- extract/factor common code of modules to libraries
+- put css and images
+- player images
+
+> Add more to the themes folder

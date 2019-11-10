@@ -30,5 +30,11 @@ module.exports = [
 "Slime",
 "Nuclear",
 "Laser",
-"Quantum"
+"Quantum",
+"Darth",
+"Anime",
+"Kaizer",
+"Dwarf",
+"Sad",
+"Millenial"
 ];
