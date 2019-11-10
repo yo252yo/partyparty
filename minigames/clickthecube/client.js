@@ -1,4 +1,5 @@
 var startTime;
+document.getElementById('div').innerHTML = "";
 
 var clickObjective = function (){
   alert("Done!");
@@ -21,8 +22,6 @@ var drawSquare = function(x,y){
 	node.appendChild(newContent);
 	document.body.appendChild(node);
 }
-
-document.getElementById('div').innerHTML = "";
 
 var moduleListener = function(event){ 
   switch(event.data.split("|")[0]) {

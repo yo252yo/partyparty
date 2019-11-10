@@ -1,13 +1,13 @@
+document.getElementById("answer").focus();
+displayTimer(30);
+
+// Define the function on window to make sure it's accessible from the HTML.
 window.sendAnswer = function(){
   var proposal = document.getElementById("answer").value;
   ClientSocket.send("ProposeRiddleAnswer", proposal);  
   document.getElementById("answer").value = "";
   document.getElementById("answer").focus();
 }
-
-document.getElementById("answer").focus();
-
-displayTimer(30);
 
 var moduleListener = function(event){ 
   switch(event.data.split("|")[0]) {

@@ -9,10 +9,9 @@
 - copy mario party
 
 > Features
-- ready check in game loading (with keyboard control)
-- refactor socket parsing with switch
-- extract/factor common code of modules to libraries
+- ready check in game loading (with click to be mobile friendly)
 - put css and images
 - player images
+- broadcast the theme to the maxigame
 
 > Add more to the themes folder

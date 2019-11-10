@@ -1,23 +1,20 @@
+var ServerSocket = require('./server_socket.js');
 var Request = require('request-promise');
 var Cheerio = require('cheerio');
 var AllPlayers = require('./all_players.js');
-var GameEngine = require('./game_engine.js');
-var ModuleLoader = require('./module_loader.js');
+var MinigamesCommon = require('./minigames/common.js');
+var Scoreboard = require('./minigames/scoreboard.js');
 
-var game_ended = false;
-
-setTimeout(function(){
-  if (! game_ended) {
-    endGame();
-  }
-}, 30000);
-
+// Initialization
 var lat = 0;
 var lng = 0;
+var game_ended = false;
+var distances = new Scoreboard();
 
-// Asking a random latitude and longitude on street view results in a blank map. 
-// To be sure that the location exist, we ask geoguessr.
+// Game logic
 var loadCoordinatesFromGeoguessr = function(){
+  // Asking a random latitude and longitude on street view results in a blank map. 
+  // To be sure that the location exist, we ask geoguessr.
   Request.post('https://www.geoguessr.com/api/v3/games/', {
     json: {map: "trial-world", type: "standard"}
   }, (error, res, body) => {
@@ -35,53 +32,32 @@ var loadCoordinatesFromGeoguessr = function(){
     console.log("Coordinates:" + lat + "," + lng);
   })
 }
-
 loadCoordinatesFromGeoguessr();
 
-
-var players = GameEngine.getAllIds();
-var distances = {};
-
-var listener = function (event, webSocket) {
-  if (event.data.split("|")[0] == "GeoguessAnswerProposal"){
-    var coordinates = event.data.split("|")[1];
-    var p_lat = coordinates.split(",")[0];
-    var p_lng = coordinates.split(",")[1];
-    var distance = Math.sqrt(Math.pow(p_lat - lat,2) + Math.pow(p_lng - lng,2));
-    var id = webSocket.player_id;
-    console.log(id + " got " + distance + " at " + coordinates);
-    
-    distances[id] = distance;
-    
-    if (Object.keys(distances).length == players.length) {
-      endGame();
-    }
-  }
-}
-
-ServerSocket.plugModuleListener(listener);
-
+// End game handling
 var endGame = function(){
-  game_ended = true;
-  console.log("Game ended");  
+  if (game_ended) { return; }
   
-  var minDist = 20000;
-  var argMinDist = "Noone";
-  
-  for (var id in distances){
-    if (distances[id] < minDist){
-      minDist = distances[id];
-      argMinDist = id;
-    }
-  }
-  
-  if (argMinDist != "Noone"){
-    GameEngine.changeScore(argMinDist, 1);
-  }
-  
-  AllPlayers.broadcastMessage("VictoryAnnouncement", argMinDist);
-  
-  setTimeout(function(){
-    ModuleLoader.endMinigame();
-  }, 10000);
+  game_ended = true;  
+  MinigamesCommon.simpleOnePlayerWin(distances.getMinScore(), 10000);
 }
+setTimeout(endGame, 30000); // Deadline
+
+// Listener
+var moduleListener = function(event, webSocket){ 
+  switch(event.data.split("|")[0]) {
+    case "GeoguessAnswerProposal":
+      var coordinates = event.data.split("|")[1];
+      var p_lat = coordinates.split(",")[0];
+      var p_lng = coordinates.split(",")[1];
+      var distance = Math.sqrt(Math.pow(p_lat - lat,2) + Math.pow(p_lng - lng,2));
+      
+      distances.setScore(webSocket.player_id, distance);
+      
+      if (distances.isFull()) { endGame(); }
+      break;
+    default:
+  }
+}
+
+ServerSocket.plugModuleListener(moduleListener);

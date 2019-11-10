@@ -12,11 +12,9 @@ var getPositionOfClick = function(event){
 }
 document.getElementById("pickerMap").addEventListener("click", getPositionOfClick);
 
-
 var drawCorrection = function(){
   console.log("Drawing correction at " + coordinates);
   var imageRect = document.getElementById("pickerMap").getBoundingClientRect();
-//  var Ypercent = -1 * ((parseFloat(coordinates.split(",")[0]) + 90)/180 - 1);
   var Ypercent = 1-(parseFloat(coordinates.split(",")[0])+90)/180;
   var Xpercent = (parseFloat(coordinates.split(",")[1])+180)/360;
   var correctionX = window.scrollX + imageRect.x + imageRect.width * Xpercent;
@@ -26,7 +24,6 @@ var drawCorrection = function(){
   document.getElementById("correctionDiv").style.top = correctionY - 3;
   document.getElementById("correctionDiv").style.left = correctionX - 3;
 }
-
 
 var moduleListener = function(event){ 
   console.log("Received" + event.data);
