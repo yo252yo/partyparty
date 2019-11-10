@@ -19,8 +19,8 @@ var drawCorrection = function(){
 //  var Ypercent = -1 * ((parseFloat(coordinates.split(",")[0]) + 90)/180 - 1);
   var Ypercent = 1-(parseFloat(coordinates.split(",")[0])+90)/180;
   var Xpercent = (parseFloat(coordinates.split(",")[1])+180)/360;
-  var correctionX = imageRect.x + imageRect.width * Xpercent;
-  var correctionY = imageRect.y + imageRect.height * Ypercent;
+  var correctionX = window.scrollX + imageRect.x + imageRect.width * Xpercent;
+  var correctionY = window.scrollY + imageRect.y + imageRect.height * Ypercent;
   console.log("> " + correctionX + "/" + correctionY);
   document.getElementById("correctionDiv").style.visibility = "visible";
   document.getElementById("correctionDiv").style.top = correctionY - 3;
