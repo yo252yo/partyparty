@@ -2,10 +2,7 @@ var Fs = require('fs');
 
 
 class ModuleLoader {
-  static loadModule(folder, name, default_script){
-    var ServerSocket = require('./server_socket.js');
-    ServerSocket.resetModuleListener();
-      
+  static getPage(folder, name, default_script){
     var document_html = "";
     var script = default_script;
     
@@ -16,11 +13,17 @@ class ModuleLoader {
       script = Fs.readFileSync('./' + folder + '/' +  name + '/client.js').toString();
     }
 
-    var page = {
+    return {
       document_html: document_html,
       script: script
-    };
-    
+    };    
+  }
+  
+  static loadModule(folder, name, default_script){
+    var ServerSocket = require('./server_socket.js');
+    ServerSocket.resetModuleListener();
+      
+    var page = ModuleLoader.getPage(folder, name, default_script);    
     var AllPlayers = require('./all_players.js');
     AllPlayers.broadcastObject(page);
     
@@ -43,9 +46,13 @@ class ModuleLoader {
     var name = games[Math.floor(Math.random() * games.length)];
     ModuleLoader.loadMinigame(name);
   }
+  
+  static getMaxiGame() {
+    return "minigamechoser";
+  }
     
   static endMinigame(){
-      ModuleLoader.loadModule("maxigames", "minigamechoser");
+      ModuleLoader.loadModule("maxigames", ModuleLoader.getMaxiGame());
       // Remind everyone of player list 
       var AllPlayers = require('./all_players.js');
       var GameEngine = require('./game_engine.js');

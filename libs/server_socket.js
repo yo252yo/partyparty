@@ -17,22 +17,18 @@ class ServerSocket {
   }  
   
   static handleNewPlayer(webSocket){
-      // This goes back to title screen every time a new player joins, which is not ideal.
-      // Ideally you'd send the title screen only to them.
-      ModuleLoader.endMinigame();
+      var welcome_page = ModuleLoader.getPage("maxigames", ModuleLoader.getMaxiGame()); 
+      webSocket.send(JSON.stringify(welcome_page));
       webSocket.send("HereIsYourId" + "|" + webSocket.player_id);
       
-      var GameEngine = require('./game_engine.js');
-      console.log("Now playing:" + GameEngine.getAllIds().toString());  
-      
+      var GameEngine = require('./game_engine.js');      
       var AllPlayers = require('./all_players.js');
+      console.log("Now playing:" + GameEngine.getAllIds().toString());  
       AllPlayers.broadcastMessage("CurrentPlayerList", GameEngine.getAllIds().toString());     
   }
   
   // The event listener is static because it can be called in any context, that's why we pass it the individual webSocket as parameter.
   static onSocketMessage(event, webSocket) {  
-    // this should be a switch
-    
     switch(event.data.split("|")[0]) {
       case "StartMinigame":
         ModuleLoader.loadMinigame(event.data.split("|")[1]);
