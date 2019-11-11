@@ -13,5 +13,6 @@
 - put css and images
 - player images
 - broadcast the theme to the maxigame
+- player colors
 
 > Add more to the themes folder
