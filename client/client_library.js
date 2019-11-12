@@ -30,3 +30,43 @@ function displayTimer(seconds) {
   
   console.log("Timer set for " + seconds);
 }
+
+function fireDocumentEvent(name){
+  var event = new Event((name);
+  document.dispatchEvent(event);  
+}
+
+document.addEventListener('keydown', function(e) {
+    var key = event.keyCode;
+    var character = String.fromCharCode(event.keyCode).toLowerCase();
+    if (character == "w" || key == 38 || key == 104) {
+      fireDocumentEvent('press_up');
+    }
+    if (character == "a" || key == 37 || key == 100) {
+      fireDocumentEvent('press_left');
+    }
+    if (character == "d" || key == 39 || key == 102) {
+      fireDocumentEvent('press_right');
+    }
+    if (character == "s" || key == 40 || key == 98) {
+      fireDocumentEvent('press_down');
+    }
+});
+
+document.addEventListener('click', function(event) {
+    var isTopRight = event.clientX > event.clientY;
+    var isTopLeft = event.clientX < window.innerHeight - event.clientY;
+    
+    if (isTopRight && isTopLeft) {
+      fireDocumentEvent('press_up');
+    }
+    if (!isTopRight && isTopLeft) {
+      fireDocumentEvent('press_left');
+    }
+    if (isTopRight && !isTopLeft) {
+      fireDocumentEvent('press_right');
+    }
+    if (!isTopRight && !isTopLeft) {
+      fireDocumentEvent('press_down');
+    }
+});

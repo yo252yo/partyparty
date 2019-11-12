@@ -16,3 +16,18 @@
 - player colors
 
 > Add more to the themes folder
+
+
+> Minigames
+- click the square: maybe have it move ?
+- maze: show the other players
+- maze: make a module to have it playable on mobile
+- riddle: remplacer les chiffre aussi
+
+> Maxigame
+- make a simple proof of concept snake and ladders
+
+
+> check
+it had too many problems
+It had too many problems.

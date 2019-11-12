@@ -41,7 +41,7 @@ var updateDisplay = function() {
       if (maze[spot] == '0')
         text += '&nbsp;';
       if (maze[spot] == '1')
-        text += '@';
+        text += '<b style="background-color:blue;">@</b>';
       if (maze[spot] == '2')
         text += '&lt;';
       spot++;
@@ -54,49 +54,60 @@ var updateDisplay = function() {
 // Key presses to move
 var x = 1;
 var y = 1;
-document.addEventListener('keydown', function(e) {
-    var ok = false;
-    var touche = String.fromCharCode(e.keyCode).toLowerCase();
-    var key = e.keyCode;
-    if (touche == "k" || key == 38 || key == 104) {
-      maze[x*width+y]=0;
-      x--;
-      if (maze[x*width+y] == 2)
-        win();
-      if (maze[x*width+y] == -1)
-        x++;
-      maze[x*width+y]=1;
-    }
-    if (touche == "h" || key == 37 || key == 100) {
-      maze[x*width+y]=0;
-      y--;
-      if (maze[x*width+y] == 2)
-        win();
-      if (maze[x*width+y] == -1)
-        y++;
-      maze[x*width+y]=1;
-    }
-    if (touche == "l" || key == 39 || key == 102) {
-      maze[x*width+y]=0;
-      y++;
-      if (maze[x*width+y] == 2)
-        win();
-      if (maze[x*width+y] == -1)
-        y--;
-      maze[x*width+y]=1;
-    }
-    if (touche == "j" || key == 40 || key == 98) {
-      maze[x*width+y]=0;
-      x++;
-      if (maze[x*width+y] == 2)
-        win();
-      if (maze[x*width+y] == -1)
-        x--;
-      maze[x*width+y]=1;
-    }
-    updateDisplay();
-}, false);
 
+var goUp = function(e) {
+  maze[x*width+y]=0;
+  x--;
+  if (maze[x*width+y] == 2)
+    win();
+  if (maze[x*width+y] == -1)
+    x++;
+  maze[x*width+y]=1;
+  
+  updateDisplay();
+}
+
+var goLeft = function(e) {
+  maze[x*width+y]=0;
+  y--;
+  if (maze[x*width+y] == 2)
+    win();
+  if (maze[x*width+y] == -1)
+    y++;
+  maze[x*width+y]=1;
+  
+  updateDisplay();
+}
+
+var goRight = function(e) {
+  maze[x*width+y]=0;
+  y++;
+  if (maze[x*width+y] == 2)
+    win();
+  if (maze[x*width+y] == -1)
+    y--;
+  maze[x*width+y]=1;
+  
+  updateDisplay();
+}
+
+var goDown = function(e) {
+  maze[x*width+y]=0;
+  x++;
+  if (maze[x*width+y] == 2)
+    win();
+  if (maze[x*width+y] == -1)
+    x--;
+  maze[x*width+y]=1;
+  
+  updateDisplay();
+}
+
+
+document.addEventListener('press_up', goUp);
+document.addEventListener('press_left', goLeft);
+document.addEventListener('press_right', goRight);
+document.addEventListener('press_down', goDown);
 
 var moduleListener = function(event){ 
   switch(event.data.split("|")[0]) {
@@ -106,6 +117,10 @@ var moduleListener = function(event){
       updateDisplay();
       break;
     case "VictoryAnnouncement":
+      document.removeEventListener('press_up', goUp);
+      document.removeEventListener('press_left', goLeft);
+      document.removeEventListener('press_right', goRight);
+      document.removeEventListener('press_down', goDown);
       alert(event.data);
       break;
     default:
