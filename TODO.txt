@@ -28,6 +28,6 @@
 - make a simple proof of concept snake and ladders
 
 
-> check
+> check riddle
 it had too many problems
 It had too many problems.

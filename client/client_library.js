@@ -32,7 +32,7 @@ function displayTimer(seconds) {
 }
 
 function fireDocumentEvent(name){
-  var event = new Event((name);
+  var event = new Event(name);
   document.dispatchEvent(event);  
 }
 
