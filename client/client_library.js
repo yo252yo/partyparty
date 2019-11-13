@@ -57,16 +57,13 @@ document.addEventListener('click', function(event) {
     var isTopRight = event.clientX > event.clientY;
     var isTopLeft = event.clientX < window.innerHeight - event.clientY;
     
-    if (isTopRight && isTopLeft) {
-      fireDocumentEvent('press_up');
-    }
     if (!isTopRight && isTopLeft) {
       fireDocumentEvent('press_left');
-    }
-    if (isTopRight && !isTopLeft) {
+    } else if (isTopRight && !isTopLeft) {
       fireDocumentEvent('press_right');
-    }
-    if (!isTopRight && !isTopLeft) {
+    } else if (isTopRight && isTopLeft) {
+      fireDocumentEvent('press_up');
+    } else if (!isTopRight && !isTopLeft) {
       fireDocumentEvent('press_down');
     }
 });
