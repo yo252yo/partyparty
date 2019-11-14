@@ -15,27 +15,27 @@ var game_ended = false;
 var httpRequestCallback = function(html){
   try {
     var c = Cheerio.load(html);
-    
-    var question = c('.riddle-question > p').html().split("</strong>")[1]; 
+
+    var question = c('.riddle-question > p').html().split("</strong>")[1];
     answer = c('.riddle-answer > p').html().split("</strong>")[1];
-    
+
     if(answer.length > 30){
       console.log("Too long, repick");
-      requestRiddle();      
-    } else {    
-      console.log("Question " + question);  
+      requestRiddle();
+    } else {
+      console.log("Question " + question);
       AllPlayers.broadcastMessage("RiddleQuestion", question);
-      
+
       console.log("Answer:" + answer);
     }
-    
+
   } catch (error) {
     requestRiddle();
   }
 }
 
 var requestRiddle = function() {
-  Request('https://www.goodriddlesnow.com/riddles/random').then(httpRequestCallback); 
+  Request('https://www.goodriddlesnow.com/riddles/random').then(httpRequestCallback);
 }
 
 requestRiddle();
@@ -63,14 +63,14 @@ var endGame = function(winner){
 setTimeout(endGame, 30000); // Deadline
 
 // Listener
-var moduleListener = function(event, webSocket){ 
+var moduleListener = function(event, webSocket){
   switch(event.data.split("|")[0]) {
     case "ProposeRiddleAnswer":
       var proposal = event.data.split("|")[1];
-      console.log(webSocket.player_id + " proposes " + proposal);
-      
+      console.log(webSocket.pp_data.player_id + " proposes " + proposal);
+
       if (MinigamesCommon.sanitizeForAnswerCheck(proposal) == MinigamesCommon.sanitizeForAnswerCheck(answer)) {
-        endGame(webSocket.player_id);
+        endGame(webSocket.pp_data.player_id);
       }
       break;
     default:
