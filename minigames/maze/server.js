@@ -103,7 +103,7 @@ setTimeout(function(){
         }
         change(maze,o,n);
         count++;
-      }  
+      }
     }
   }*/
   maze[width+1] = 1
@@ -114,18 +114,21 @@ setTimeout(function(){
 // End game handling
 var endGame = function(){
   if (game_ended) { return; }
-  
+
   game_ended = true;
   MinigamesCommon.simpleOnePlayerWin(times.getMinScore());
 }
 setTimeout(endGame, 60000); // Deadline
 
 // Listener
-var moduleListener = function(event, webSocket){ 
+var moduleListener = function(event, webSocket){
   switch(event.data.split("|")[0]) {
-    case "DurationToClick":    
-      times.setScore(webSocket.player_id, event.data.split("|")[1]);      
+    case "DurationToClick":
+      times.setScore(webSocket.player_id, event.data.split("|")[1]);
       if (times.isFull()) { endGame(); }
+      break;
+    case "MazeMyPosition":
+      AllPlayers.broadcastMessage("MazePlayerPosition", event.data.split("|")[1]);
       break;
     default:
   }

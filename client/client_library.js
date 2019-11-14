@@ -1,12 +1,12 @@
 
 function appendToBody(text){
-	var node = document.createElement("div");		
-	var newContent = document.createTextNode(text); 
+	var node = document.createElement("div");
+	var newContent = document.createTextNode(text);
 	node.appendChild(newContent);
 	document.body.appendChild(node);
 }
 
-function updateTimer(seconds){    
+function updateTimer(seconds){
   if (document.getElementById("timer")){
     document.getElementById("timer").innerHTML = seconds + "s";
   }
@@ -15,9 +15,9 @@ function updateTimer(seconds){
 function displayTimer(seconds) {
   clearInterval();
   var timer = seconds;
-  
+
   updateTimer(timer);
-  
+
   var tickInterval = function () {
     timer = timer - 1;
     if (timer <= 0) {
@@ -26,15 +26,42 @@ function displayTimer(seconds) {
       updateTimer(timer);
     }
   }
-  setInterval(tickInterval, 1000);  
-  
+  setInterval(tickInterval, 1000);
+
   console.log("Timer set for " + seconds);
 }
 
 function fireDocumentEvent(name){
   var event = new Event(name);
-  document.dispatchEvent(event);  
+  document.dispatchEvent(event);
 }
+
+function invertColorChar(char){
+  switch (char) {
+    case "0": return "F";
+    case "1": return "F";
+    case "2": return "E";
+    case "3": return "E";
+    case "4": return "D";
+    case "5": return "D";
+    case "6": return "C";
+    case "7": return "C";
+    case "8": return "3";
+    case "9": return "3";
+    case "A": return "2";
+    case "B": return "2";
+    case "C": return "1";
+    case "D": return "1";
+    case "E": return "0";
+    case "F": return "0";
+    default: return "#";
+  }
+}
+
+function invertColor(string){
+	return string.split('').map(invertColorChar).join('');
+}
+
 
 document.addEventListener('keydown', function(e) {
     var key = event.keyCode;
@@ -56,7 +83,7 @@ document.addEventListener('keydown', function(e) {
 document.addEventListener('click', function(event) {
     var isTopRight = event.clientX > event.clientY;
     var isTopLeft = event.clientX < window.innerHeight - event.clientY;
-    
+
     if (!isTopRight && isTopLeft) {
       fireDocumentEvent('press_left');
     } else if (isTopRight && !isTopLeft) {

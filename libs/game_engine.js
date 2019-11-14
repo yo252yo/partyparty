@@ -55,6 +55,17 @@ class GameEngine {
     return result;
   }
 
+  static getAllIds() {
+    var result  = [];
+
+    var all_data = AllPlayers.getAllPpData();
+    for (var i in all_data){
+      result.push(all_data[i].player_id);
+    }
+
+    return result;
+  }
+
   static getNewId(){
     var nouns = require('../themes/nouns/' + GameEngine.theme + '.js');
     var modifiers = require('../themes/modifiers.js');
