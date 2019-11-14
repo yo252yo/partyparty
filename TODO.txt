@@ -1,6 +1,4 @@
-> Figure out github code review
-
-> Minigames
+> New minigames
 - countdown (le compte est bon)
 - countdown (lettres)
 - trivia quiz
@@ -9,24 +7,28 @@
 - copy mario party
 
 > Features
-- put css and images
+- more css and images
 - player images
 - broadcast the theme to the maxigame
+- mb factor "broadcastScore" between welcome page and ready check
 
 > Add more to the themes folder
-
-
-> Minigames
-- click the square: maybe have it move ?
-- riddle: remplacer les chiffre aussi
-- riddle: better clue
-- riddle:  avoid clue all
-- riddle: dont clue numbers
 
 > Maxigame
 - make a simple proof of concept snake and ladders
 
+> Minigames
+- click the square:
+-- maybe have it move ?
+-- where's waldo
+-- click the most times
+-- find invisible square
 
-> check riddle
-it had too many problems
-It had too many problems.
+- riddle:
+-- remplacer les chiffre aussi
+-- better clue algorithm
+-- avoid clue all
+-- didnt validate: "it had too many problems" for "It had too many problems." wtf?
+
+- geoguessr:
+-- plot everyone's answers
