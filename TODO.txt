@@ -23,6 +23,9 @@
 - maze: show the other players
 - maze: make a module to have it playable on mobile
 - riddle: remplacer les chiffre aussi
+- riddle: better clue
+- riddle:  avoid clue all
+- riddle: dont clue numbers
 
 > Maxigame
 - make a simple proof of concept snake and ladders

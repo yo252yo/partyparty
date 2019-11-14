@@ -7,28 +7,27 @@ class ServerSocket {
       ServerSocket.moduleSocketListener(event, webSocket);
     }
   }
-  
-  static resetModuleListener(){    
-    ServerSocket.moduleSocketListener = function(event, webSocket){};    
+
+  static resetModuleListener(){
+    ServerSocket.moduleSocketListener = function(event, webSocket){};
   }
-    
+
   static plugModuleListener(listener){
     ServerSocket.moduleSocketListener = listener;
-  }  
-  
-  static handleNewPlayer(webSocket){
-      var welcome_page = ModuleLoader.getPage("maxigames", ModuleLoader.getMaxiGame()); 
-      webSocket.send(JSON.stringify(welcome_page));
-      webSocket.send("HereIsYourId" + "|" + webSocket.player_id);
-      
-      var GameEngine = require('./game_engine.js');      
-      var AllPlayers = require('./all_players.js');
-      console.log("Now playing:" + GameEngine.getAllIds().toString());  
-      AllPlayers.broadcastMessage("CurrentPlayerList", GameEngine.getAllIds().toString());     
   }
-  
+
+  static handleNewPlayer(webSocket){
+      var welcome_page = ModuleLoader.getPage("maxigames", ModuleLoader.getMaxiGame());
+      webSocket.send(JSON.stringify(welcome_page));
+
+      var GameEngine = require('./game_engine.js');
+      var AllPlayers = require('./all_players.js');
+      console.log("Now playing:" + GameEngine.getListOfPlayers().toString());
+      AllPlayers.broadcastMessage("CurrentPlayerList", GameEngine.getListOfPlayers().toString());
+  }
+
   // The event listener is static because it can be called in any context, that's why we pass it the individual webSocket as parameter.
-  static onSocketMessage(event, webSocket) {  
+  static onSocketMessage(event, webSocket) {
     switch(event.data.split("|")[0]) {
       case "StartMinigame":
         ModuleLoader.loadMinigame(event.data.split("|")[1]);
@@ -37,7 +36,7 @@ class ServerSocket {
         ModuleLoader.loadRandomMinigame();
         break;
       case "NewClientAnnouncement":
-        ServerSocket.handleNewPlayer(webSocket); 
+        ServerSocket.handleNewPlayer(webSocket);
         break;
       case "ResetWholeGame":
         var GameEngine = require('./game_engine.js');
@@ -45,26 +44,26 @@ class ServerSocket {
         break;
       case "RerollNameRequest":
         var GameEngine = require('./game_engine.js');
-        webSocket.player_id = GameEngine.getNewId();
-        ServerSocket.handleNewPlayer(webSocket); 
+        GameEngine.setNewIdToPlayer(webSocket);
+        ServerSocket.handleNewPlayer(webSocket);
         break;
       default:
         console.log("received:" + event.data);
     }
-    
+
     ServerSocket.executeModuleListener(event, webSocket);
   }
-  
+
   // Individual
   constructor(webSocket) {
-    this.webSocket = webSocket;    
+    this.webSocket = webSocket;
     this.webSocket.onmessage = function (event) { ServerSocket.onSocketMessage(event, webSocket); };
     this.webSocket.connection_id = ServerSocket.next_player_id;
     ServerSocket.next_connection_id ++;
-    
+
     var GameEngine = require('./game_engine.js');
-    this.webSocket.player_id = GameEngine.getNewId();
-  }  
+    GameEngine.setNewIdToPlayer(webSocket);
+  }
 }
 
 ServerSocket.next_connection_id = 0;

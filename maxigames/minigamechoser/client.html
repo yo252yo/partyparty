@@ -1,9 +1,9 @@
 <h1>Welcome</h1>
-You are <div id="player_id_div" style="background-color:yellow;"></div>
+You are <span id="player_id_div"></span><br />
 <input type="button" value="RerollName (dont overuse plz)" onclick="ClientSocket.send('RerollNameRequest|');" />
 <br />
 
-Now playing <div id="all_players_div" style="background-color:grey;"></div>
+Now playing <div id="all_players_div"></div>
 
 <h1>Minigame choser</h1>
 <input type="button" value="random" onclick="ClientSocket.send('StartRandomMinigame|');" />

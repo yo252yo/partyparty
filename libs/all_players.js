@@ -6,40 +6,42 @@ class AllPlayers {
   static bindExpressWs(expressWs){
     AllPlayers.ExpressWs = expressWs;
   }
-  
+
   static doToAllClients(f){
     AllPlayers.ExpressWs.getWss('/').clients.forEach(function (client) {
       f(client);
     });
   }
- 
+
   static broadcastMessage(prefix, msg) {
     //console.log("BC:" + msg);
     AllPlayers.doToAllClients(function (client) {
       client.send(prefix + "|" + msg);
-    });  
+    });
   }
-  
+
   static broadcastObject(object) {
     //console.log("BC:" + object);
     AllPlayers.doToAllClients(function (client) {
       client.send(JSON.stringify(object));
-    });  
+    });
   }
-  
+
   static getAllIps() {
     var result  = [];
     AllPlayers.doToAllClients(function (client) {
       result.push(client._socket.remoteAddress);
-    });  
+    });
     return result;
   }
-    
-  static getAllIds() {
+
+  static getAllPpData() {
     var result  = [];
     AllPlayers.doToAllClients(function (client) {
-      result.push(client.player_id);
-    });  
+      if (client.pp_data){
+        result.push(client.pp_data);
+      }
+    });
     return result;
   }
 }
