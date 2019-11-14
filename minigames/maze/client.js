@@ -3,7 +3,7 @@ var win = function (){
   alert("You escaped!");
   var duration = (new Date() - startTime);
   console.log("Sending" + duration);
-  ClientSocket.send("DurationToClick", duration);
+  ClientSocket.send("MazeEscapeDuration", duration);
 }
 
 // Maze parameters

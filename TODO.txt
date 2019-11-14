@@ -9,7 +9,6 @@
 - copy mario party
 
 > Features
-- ready check in game loading (with click to be mobile friendly)
 - put css and images
 - player images
 - broadcast the theme to the maxigame

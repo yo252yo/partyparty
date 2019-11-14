@@ -2,9 +2,9 @@ var Fs = require('fs');
 
 
 class ModuleLoader {
-  static getPage(folder, name, default_script){
+  static getPage(folder, name){
     var document_html = "";
-    var script = default_script;
+    var script = "";
 
     if (Fs.existsSync('./' + folder + '/' +  name + '/client.html')){
       document_html = Fs.readFileSync('./' + folder + '/' +  name + '/client.html').toString();
@@ -19,11 +19,11 @@ class ModuleLoader {
     };
   }
 
-  static loadModule(folder, name, default_script){
+  static loadModule(folder, name){
     var ServerSocket = require('./server_socket.js');
     ServerSocket.resetModuleListener();
 
-    var page = ModuleLoader.getPage(folder, name, default_script);
+    var page = ModuleLoader.getPage(folder, name);
     var AllPlayers = require('./all_players.js');
     AllPlayers.broadcastObject(page);
 
@@ -32,16 +32,24 @@ class ModuleLoader {
     }
   }
 
-  static loadMinigame = function (name) {
+  static loadMinigame(name) {
     console.log("Starting minigame:" + name);
-    ModuleLoader.loadModule('minigames', name + '/setup', "displayTimer(5);");
+    ModuleLoader.pendingMinigame = name;
 
-    setTimeout(function() {
-      ModuleLoader.loadModule('minigames', name);
-    }, 5000);
+    var page = ModuleLoader.getPage('minigames', name + '/setup');
+    page.script = Fs.readFileSync('./libs/minigames/setup_client.js').toString();
+    var AllPlayers = require('./all_players.js');
+    AllPlayers.broadcastObject(page);
+
+    eval(Fs.readFileSync('./libs/minigames/setup_server.js').toString());
   }
 
-  static loadRandomMinigame = function (){
+  static startMinigame(){
+    ModuleLoader.loadModule('minigames', ModuleLoader.pendingMinigame);
+    delete ModuleLoader.pendingMinigame;
+  }
+
+  static loadRandomMinigame(){
     var games = Fs.readdirSync("./minigames");
     var name = games[Math.floor(Math.random() * games.length)];
     ModuleLoader.loadMinigame(name);
@@ -56,7 +64,7 @@ class ModuleLoader {
       // Remind everyone of player list
       var AllPlayers = require('./all_players.js');
       var GameEngine = require('./game_engine.js');
-      AllPlayers.broadcastMessage("CurrentPlayerList", GameEngine.getListOfPlayers());        
+      AllPlayers.broadcastMessage("CurrentPlayerList", GameEngine.getListOfPlayers());
   }
 }
 
