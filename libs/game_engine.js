@@ -62,7 +62,7 @@ class GameEngine {
     for (var i in all_data){
       result.push(all_data[i].player_id);
     }
-
+    
     return result;
   }
 

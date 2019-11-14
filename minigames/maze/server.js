@@ -124,7 +124,7 @@ setTimeout(endGame, 60000); // Deadline
 var moduleListener = function(event, webSocket){
   switch(event.data.split("|")[0]) {
     case "DurationToClick":
-      times.setScore(webSocket.player_id, event.data.split("|")[1]);
+      times.setScore(webSocket.pp_data.player_id, event.data.split("|")[1]);
       if (times.isFull()) { endGame(); }
       break;
     case "MazeMyPosition":
