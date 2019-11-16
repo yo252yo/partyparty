@@ -21,9 +21,7 @@ class ServerSocket {
       webSocket.send(JSON.stringify(welcome_page));
 
       var GameEngine = require('./game_engine.js');
-      var AllPlayers = require('./all_players.js');
-      console.log("Now playing:" + GameEngine.getListOfPlayers().toString());
-      AllPlayers.broadcastMessage("CurrentPlayerList", GameEngine.getListOfPlayers().toString());
+      GameEngine.broadcastPlayersList();
   }
 
   // The event listener is static because it can be called in any context, that's why we pass it the individual webSocket as parameter.

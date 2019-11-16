@@ -44,6 +44,17 @@ class AllPlayers {
     });
     return result;
   }
+
+  static getAllIds() {
+    var result  = [];
+
+    var all_data = AllPlayers.getAllPpData();
+    for (var i in all_data){
+      result.push(all_data[i].player_id);
+    }
+
+    return result;
+  }
 }
 
 module.exports = AllPlayers;

@@ -1,5 +1,6 @@
 var Fs = require('fs');
 var AllPlayers = require('./all_players.js');
+var Scoreboard = require('./minigames/scoreboard.js');
 
 class GameEngine {
   static getAllPossibleColors(){
@@ -12,22 +13,18 @@ class GameEngine {
   }
 
   static getScore(id) {
-    if (id in GameEngine.scores){
-      return GameEngine.scores[id];
-    }
-    return 0;
+    return GameEngine.scoreBoard.getScore(id);
   }
 
   static changeScore(id, increment) {
-    GameEngine.scores[id] = GameEngine.getScore(id) + increment;
+    return GameEngine.scoreBoard.setScore(id, GameEngine.scoreBoard.getScore(id) + increment);
   }
 
   static initializeModule(){
     GameEngine.usedIds = [];
     GameEngine.theme = "";
     GameEngine.pickTheme();
-
-    GameEngine.scores = {};
+    GameEngine.scoreBoard = new Scoreboard(true); // avoid mutual inclusion.
   }
 
   static resetWholeGame(){
@@ -42,28 +39,8 @@ class GameEngine {
     });
   }
 
-  static getListOfPlayers() {
-    var result  = [];
-
-    var all_data = AllPlayers.getAllPpData();
-    for (var i in all_data){
-      var player = all_data[i];
-      var name = player.player_id;
-      result.push(player.player_id + "/" + player.color + ":" + parseInt(GameEngine.getScore(player.player_id)));
-    }
-
-    return result;
-  }
-
-  static getAllIds() {
-    var result  = [];
-
-    var all_data = AllPlayers.getAllPpData();
-    for (var i in all_data){
-      result.push(all_data[i].player_id);
-    }
-    
-    return result;
+  static broadcastPlayersList() {
+    GameEngine.scoreBoard.broadcastScores("CurrentPlayerList");
   }
 
   static getNewId(){

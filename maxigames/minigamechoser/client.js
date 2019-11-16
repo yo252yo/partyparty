@@ -21,9 +21,11 @@ var listener = function(event){
         return parseInt(a[1])<parseInt(b[1])?1:(parseInt(a[1])>parseInt(b[1])?-1:0);
     });
 
+      console.log(players_with_scores);
     all_players_ids = "";
     for (var i in players_with_scores) {
       var id =  players_with_scores[i][0].split("/")[0];
+      if (! id) { continue; }
       var color =  players_with_scores[i][0].split("/")[1];
 
       all_players_ids += "<span style='color:" + color;

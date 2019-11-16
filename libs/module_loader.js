@@ -62,9 +62,8 @@ class ModuleLoader {
   static endMinigame(){
       ModuleLoader.loadModule("maxigames", ModuleLoader.getMaxiGame());
       // Remind everyone of player list
-      var AllPlayers = require('./all_players.js');
       var GameEngine = require('./game_engine.js');
-      AllPlayers.broadcastMessage("CurrentPlayerList", GameEngine.getListOfPlayers());
+      GameEngine.broadcastPlayersList();
   }
 }
 

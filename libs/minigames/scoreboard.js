@@ -1,20 +1,18 @@
 var AllPlayers = require('../all_players.js');
-var GameEngine = require('../game_engine.js');
-var ModuleLoader = require('../module_loader.js');
-var ServerSocket = require('../server_socket.js');
-var MinigamesCommon = require('./common.js');
 
 class Scoreboard {
 
+  static getDefaultWinner(){
+    return "Noone";
+  }
 
   constructor() {
-    this.players = GameEngine.getAllIds();
     this.scores = {};
   }
 
   getMinScore() {
     var min;
-    var argMin = MinigamesCommon.getDefaultWinner();
+    var argMin = Scoreboard.getDefaultWinner();
 
     if (this.scores.length == 0){
       return argMin;
@@ -36,11 +34,31 @@ class Scoreboard {
   }
 
   getScore(player) {
-    return this.scores[player];
+    if (this.scores[player]){
+      return this.scores[player];
+    } else {
+      return 0;
+    }
   }
 
   isFull() {
+    this.players = AllPlayers.getAllIds();
     return Object.keys(this.scores).length == this.players.length;
+  }
+
+  broadcastScores(messageKey){
+    if(! messageKey) { messageKey = "BroadcastScores";}
+    var message = "";
+    var all_data = AllPlayers.getAllPpData();
+    for (var i in all_data){
+      var player = all_data[i];
+      var name = player.player_id;
+      var score = this.getScore(name);
+      // Maybe this should be an object??
+      message += player.player_id + "/" + player.color + ":" + score + ",";
+    }
+    console.log("BroadcastScores(" + messageKey + "):" + message)
+    AllPlayers.broadcastMessage(messageKey, message);
   }
 
 }
