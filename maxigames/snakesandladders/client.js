@@ -128,9 +128,7 @@ var listener = function(event){
           break;
         default:
       }
-
   }
-
 }
 
 ClientSocket.plugModuleListener(listener);

@@ -10,6 +10,7 @@ var lat = 0;
 var lng = 0;
 var game_ended = false;
 var distances = new Scoreboard();
+var coordinatesRecord = new Scoreboard();
 
 // Game logic
 var loadCoordinatesFromGeoguessr = function(){
@@ -28,7 +29,6 @@ var loadCoordinatesFromGeoguessr = function(){
     lng = body.rounds[0].lng.toFixed(4);
 
     AllPlayers.broadcastMessage("GeoguessCoords", lat + "," + lng);
-
     console.log("Coordinates:" + lat + "," + lng);
   })
 }
@@ -39,6 +39,7 @@ var endGame = function(){
   if (game_ended) { return; }
 
   game_ended = true;
+  coordinatesRecord.broadcastScores("GeoguessPlayerResults");
   MinigamesCommon.simpleOnePlayerWin(distances.getMinScore(), 10000);
 }
 setTimeout(endGame, 30000); // Deadline
@@ -53,6 +54,7 @@ var moduleListener = function(event, webSocket){
       var distance = Math.sqrt(Math.pow(p_lat - lat,2) + Math.pow(p_lng - lng,2));
 
       distances.setScore(webSocket.pp_data.player_id, distance);
+      coordinatesRecord.setScore(webSocket.pp_data.player_id, p_lat + "," + p_lng);
 
       if (distances.isFull()) { endGame(); }
       break;
