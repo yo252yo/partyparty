@@ -1,4 +1,4 @@
-> New minigames
+> New minigames ideas
 - countdown (le compte est bon)
 - countdown (lettres)
 - trivia quiz
@@ -10,13 +10,12 @@
 - more css and images
 - player images
 - broadcast the theme to the maxigame
-- mb factor "broadcastScore" between welcome page and ready check
 - scoreBoard
--- use object for communication
 -- move out of minigames lib to main libs
--- factor logic to parse the results in all the maxigames
+
 
 > Add more to the themes folder
+
 
 > Minigames
 - click the square:
@@ -30,10 +29,3 @@
 -- better clue algorithm
 -- avoid clue all
 -- didnt validate: "it had too many problems" for "It had too many problems." wtf?
-
-- geoguessr:
--- plot everyone's answers
-
-
--- snakesandladders
-avoid infinite looops
