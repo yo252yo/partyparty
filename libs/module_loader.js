@@ -1,4 +1,5 @@
 var Fs = require('fs');
+var AllPlayers = require('./all_players.js');
 
 
 class ModuleLoader {
@@ -23,6 +24,7 @@ class ModuleLoader {
     var ServerSocket = require('./server_socket.js');
     ServerSocket.resetModuleListener();
 
+    console.log('./' + folder + '/' +  name + '/server.js');
     var page = ModuleLoader.getPage(folder, name);
     var AllPlayers = require('./all_players.js');
     AllPlayers.broadcastObject(page);
@@ -56,11 +58,13 @@ class ModuleLoader {
   }
 
   static getMaxiGame() {
-    return "minigamechoser";
+    return "snakesandladders";
   }
 
   static endMinigame(){
-      ModuleLoader.loadModule("maxigames", ModuleLoader.getMaxiGame());
+      var welcome_page = ModuleLoader.getPage("maxigames", ModuleLoader.getMaxiGame());
+      AllPlayers.broadcastObject(welcome_page);
+      
       // Remind everyone of player list
       var GameEngine = require('./game_engine.js');
       GameEngine.broadcastPlayersList();

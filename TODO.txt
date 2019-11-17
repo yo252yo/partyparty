@@ -11,11 +11,12 @@
 - player images
 - broadcast the theme to the maxigame
 - mb factor "broadcastScore" between welcome page and ready check
+- scoreBoard
+-- use object for communication
+-- move out of minigames lib to main libs
+-- factor logic to parse the results in all the maxigames
 
 > Add more to the themes folder
-
-> Maxigame
-- make a simple proof of concept snake and ladders
 
 > Minigames
 - click the square:
@@ -32,3 +33,7 @@
 
 - geoguessr:
 -- plot everyone's answers
+
+
+-- snakesandladders
+avoid infinite looops

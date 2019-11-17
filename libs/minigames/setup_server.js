@@ -20,7 +20,7 @@ var moduleListener = function(event, webSocket){
   switch(event.data.split("|")[0]) {
     case "MinigameReadyCheck":
       readyChecks.setScore(webSocket.pp_data.player_id, "X");
-      broadcastPlayerReadyCheck();
+      broadcastPlayerReadyCheck("MinigamePlayerReadyCheck");
       if (readyChecks.isFull()) { endGame(); }
       break;
     default:

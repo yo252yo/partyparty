@@ -10,32 +10,13 @@ var refreshDivContent = function(){
 }
 
 var listener = function(event){
-  if (event.data.split("|")[0] == "CurrentPlayerList"){
-    var all_players_ids_raw = event.data.split("|")[1].split(",");
-    var players_with_scores = [];
-    for (var i in all_players_ids_raw) {
-      players_with_scores.push(all_players_ids_raw[i].split(":"));
-    }
-
-    players_with_scores.sort(function(a,b) {
-        return parseInt(a[1])<parseInt(b[1])?1:(parseInt(a[1])>parseInt(b[1])?-1:0);
-    });
-
-      console.log(players_with_scores);
-    all_players_ids = "";
-    for (var i in players_with_scores) {
-      var id =  players_with_scores[i][0].split("/")[0];
-      if (! id) { continue; }
-      var color =  players_with_scores[i][0].split("/")[1];
-
-      all_players_ids += "<span style='color:" + color;
-      all_players_ids += "; background-color:" + invertColor(color);
-      if (id == ClientSocket.getPlayerId()) {  all_players_ids += "; font-weight:bold;"};
-      all_players_ids += "'>" + players_with_scores[i][1] + " - " +  id + "</span><br />";
-    }
+  try { // only expects objects
+    var object = JSON.parse(event.data);
+    if (object.messageKey != "CurrentPlayerList"){ return ""; }
+    all_players_ids = getPlayerListStringFromSocketObject(object);
+    refreshDivContent();
   }
-
-  refreshDivContent();
+  catch(error) { }
 }
 
 ClientSocket.plugModuleListener(listener);

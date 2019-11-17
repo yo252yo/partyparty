@@ -62,6 +62,20 @@ function invertColor(string){
 	return string.split('').map(invertColorChar).join('');
 }
 
+function getPlayerListStringFromSocketObject(object){
+	console.log(object);
+	var all_players_ids = "";
+	for (var i in object.players) {
+		var player = object.players[i];
+    all_players_ids += "<span style='color:" + player.pp_data.color;
+    all_players_ids += "; background-color:" + invertColor(player.pp_data.color);
+    if (player.pp_data.player_id == ClientSocket.getPlayerId()) {
+			 all_players_ids += "; font-weight:bold;"
+		 };
+    all_players_ids += "'>" + player.score + " - " +  player.pp_data.player_id + "</span><br />";
+	}
+	return all_players_ids;
+}
 
 document.addEventListener('keydown', function(e) {
     var key = event.keyCode;

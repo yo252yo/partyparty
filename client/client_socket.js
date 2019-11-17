@@ -27,7 +27,7 @@ class ClientSocket {
         console.log("ID received:" + ClientSocket.webSocket.pp_data.player_id);
         break;
       default:
-        console.log(text);
+        //console.log(text);
     }
   }
 
@@ -45,7 +45,7 @@ class ClientSocket {
       ClientSocket.receiveSocketObject(object);
     }
     catch(error) {
-      console.log(event);
+      //console.log(event);
       ClientSocket.receiveSocketText(event.data);
     }
 

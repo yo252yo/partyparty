@@ -6,6 +6,9 @@ class ServerSocket {
     if (ServerSocket.moduleSocketListener) {
       ServerSocket.moduleSocketListener(event, webSocket);
     }
+      if (ServerSocket.permanentModuleSocketListener) {
+        ServerSocket.permanentModuleSocketListener(event, webSocket);
+      }
   }
 
   static resetModuleListener(){
@@ -14,6 +17,14 @@ class ServerSocket {
 
   static plugModuleListener(listener){
     ServerSocket.moduleSocketListener = listener;
+  }
+
+  static plugPermanentModuleListener(listener){
+    ServerSocket.permanentModuleSocketListener = listener;
+  }
+
+  static getPermanentModuleListener(){
+    return ServerSocket.permanentModuleSocketListener;
   }
 
   static handleNewPlayer(webSocket){

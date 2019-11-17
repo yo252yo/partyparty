@@ -46,19 +46,28 @@ class Scoreboard {
     return Object.keys(this.scores).length == this.players.length;
   }
 
+  makeExplicitZeros() {
+    this.players = AllPlayers.getAllIds();
+    for(var i in this.players){
+      this.setScore(this.players[i], 0);
+    }
+  }
+
   broadcastScores(messageKey){
+    var object = {};
+    object.messageKey = messageKey;
     if(! messageKey) { messageKey = "BroadcastScores";}
-    var message = "";
+
+    object.players = [];
     var all_data = AllPlayers.getAllPpData();
     for (var i in all_data){
-      var player = all_data[i];
-      var name = player.player_id;
-      var score = this.getScore(name);
-      // Maybe this should be an object??
-      message += player.player_id + "/" + player.color + ":" + score + ",";
+      var pp_data = all_data[i];
+      var player = {};
+      player.pp_data = pp_data;
+      player.score = this.getScore(pp_data.player_id);
+      object.players.push(player);
     }
-    console.log("BroadcastScores(" + messageKey + "):" + message)
-    AllPlayers.broadcastMessage(messageKey, message);
+    AllPlayers.broadcastObject(object);
   }
 
 }

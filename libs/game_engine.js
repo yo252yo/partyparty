@@ -30,13 +30,16 @@ class GameEngine {
   static resetWholeGame(){
     console.log("RESETING GAME");
     GameEngine.initializeModule();
+    var ModuleLoader = require('./module_loader.js');
+    ModuleLoader.loadModule("maxigames", ModuleLoader.getMaxiGame());
 
     AllPlayers.doToAllClients(function (client) {
-      client.player_id = GameEngine.getNewId();
+      GameEngine.setNewIdToPlayer(client);
 
       var ServerSocket = require('./server_socket.js');
       ServerSocket.handleNewPlayer(client);
     });
+
   }
 
   static broadcastPlayersList() {
