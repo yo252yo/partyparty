@@ -72,12 +72,12 @@ var applyLandingTileEffect = function(position) {
   if(tile.backward){
     new_pos -= tile.backward;
   }
-  return Math.min(board_size, Math.max(0, new_pos));
+  return Math.min(board_size-1, Math.max(0, new_pos));
 }
 
 var changePosition = function(player_id, increment) {
   var current_pos = positions.getScore(player_id);
-  var new_pos = Math.min(board_size, Math.max(0, current_pos + increment));
+  var new_pos = Math.min(board_size-1, Math.max(0, current_pos + increment));
   positions.setScore(player_id, applyLandingTileEffect(new_pos));
 }
 
