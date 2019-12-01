@@ -95,16 +95,18 @@ document.addEventListener('keydown', function(e) {
 });
 
 document.addEventListener('click', function(event) {
-    var isTopRight = event.clientX > event.clientY;
-    var isTopLeft = event.clientX < window.innerHeight - event.clientY;
+	var grid_x = Math.floor(3* event.clientX / window.innerWidth);
+	var grid_y = Math.floor(3* event.clientY / window.innerHeight);
 
-    if (!isTopRight && isTopLeft) {
-      fireDocumentEvent('press_left');
-    } else if (isTopRight && !isTopLeft) {
-      fireDocumentEvent('press_right');
-    } else if (isTopRight && isTopLeft) {
-      fireDocumentEvent('press_up');
-    } else if (!isTopRight && !isTopLeft) {
-      fireDocumentEvent('press_down');
-    }
+  if (grid_x == 0) {
+    fireDocumentEvent('press_left');
+  } else if (grid_x == 2) {
+    fireDocumentEvent('press_right');
+  }
+
+	if (grid_y == 0) {
+    fireDocumentEvent('press_up');
+  } else if (grid_y == 2) {
+    fireDocumentEvent('press_down');
+  }
 });
