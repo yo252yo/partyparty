@@ -1,3 +1,3 @@
 
-initializeQuizModule("green");
+initializeQuizModule("yellow");
 ClientSocket.plugModuleListener(quizModuleListener);
