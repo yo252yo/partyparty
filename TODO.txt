@@ -3,6 +3,7 @@
 - countdown (lettres)
 https://www.merriam-webster.com/dictionary/sdfsdf
 "Words fail us"
+can probs be done by repurposing the quiz module, even without a decisive answer
 
 - trivia quiz
 https://www.randomtriviagenerator.com/
