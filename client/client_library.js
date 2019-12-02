@@ -6,29 +6,42 @@ function appendToBody(text){
 	document.body.appendChild(node);
 }
 
+function createIddDiv(parent, name){
+  var div = document.createElement("div");
+  div.id = name;
+  parent.appendChild(div);
+  return div;
+}
+
 function updateTimer(seconds){
   if (document.getElementById("timer")){
     document.getElementById("timer").innerHTML = seconds + "s";
   }
 }
 
-function displayTimer(seconds) {
-  clearInterval();
-  var timer = seconds;
+var timer = 0;
+var timerObject;
 
-  updateTimer(timer);
-
-  var tickInterval = function () {
-    timer = timer - 1;
-    if (timer <= 0) {
-      clearInterval();
-    } else {
-      updateTimer(timer);
-    }
+function tickInterval() {
+  timer = timer - 1;
+  if (timer <= 0) {
+    clearInterval(timerObject);
+  } else {
+    updateTimer(timer);
   }
-  setInterval(tickInterval, 1000);
+}
+
+function displayTimer(seconds) {
+  clearInterval(timerObject);
+  timer = seconds;
+  updateTimer(timer);
+  timerObject = setInterval(tickInterval, 1000);
 
   console.log("Timer set for " + seconds);
+}
+
+function clearTimer() {
+  clearInterval(timerObject);
 }
 
 function fireDocumentEvent(name){
@@ -76,37 +89,3 @@ function getPlayerListStringFromSocketObject(object){
 	}
 	return all_players_ids;
 }
-
-document.addEventListener('keydown', function(e) {
-    var key = event.keyCode;
-    var character = String.fromCharCode(event.keyCode).toLowerCase();
-    if (character == "w" || key == 38 || key == 104) {
-      fireDocumentEvent('press_up');
-    }
-    if (character == "a" || key == 37 || key == 100) {
-      fireDocumentEvent('press_left');
-    }
-    if (character == "d" || key == 39 || key == 102) {
-      fireDocumentEvent('press_right');
-    }
-    if (character == "s" || key == 40 || key == 98) {
-      fireDocumentEvent('press_down');
-    }
-});
-
-document.addEventListener('click', function(event) {
-	var grid_x = Math.floor(3* event.clientX / window.innerWidth);
-	var grid_y = Math.floor(3* event.clientY / window.innerHeight);
-
-  if (grid_x == 0) {
-    fireDocumentEvent('press_left');
-  } else if (grid_x == 2) {
-    fireDocumentEvent('press_right');
-  }
-
-	if (grid_y == 0) {
-    fireDocumentEvent('press_up');
-  } else if (grid_y == 2) {
-    fireDocumentEvent('press_down');
-  }
-});

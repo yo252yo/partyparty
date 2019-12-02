@@ -58,13 +58,13 @@ class ModuleLoader {
   }
 
   static getMaxiGame() {
-    return "snakesandladders";
+    return "minigamechoser";
   }
 
   static endMinigame(){
       var welcome_page = ModuleLoader.getPage("maxigames", ModuleLoader.getMaxiGame());
       AllPlayers.broadcastObject(welcome_page);
-      
+
       // Remind everyone of player list
       var GameEngine = require('./game_engine.js');
       GameEngine.broadcastPlayersList();
