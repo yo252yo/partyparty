@@ -47,6 +47,14 @@ var drawBoard = function() {
       cell.style['background-color'] = "#f7f6a3";
       cell.innerHTML += "[<b>>" + board[i].tp + "</b>]";
     }
+    if(board[i].bonus){
+      cell.style['background-color'] = "#e2a3f7";
+      cell.innerHTML += "[<b>";
+      for (var j = 0; j < board[i].bonus; j ++){
+        cell.innerHTML += "*";
+      }
+      cell.innerHTML += "</b>]";
+    }
 
     cell.innerHTML += "<div id='squarecontent" + i + "' style='font-size:8pt;'></div>";
 

@@ -46,6 +46,10 @@ var generateBoard = function() {
             if (target == i) { target ++;}
             board.push({tp: target});
             break;
+        case (x < 0.4):
+            var bonus = Math.ceil(2 * Math.random());
+            board.push({bonus: bonus});
+            break;
         default:
             board.push({});
             break;
@@ -60,7 +64,7 @@ var startMinigame = function () {
   ModuleLoader.loadRandomMinigame();
 }
 
-var applyLandingTileEffect = function(position) {
+var applyLandingTileEffect = function(player_id, position) {
   var new_pos = position;
   var tile = board[position];
   if(tile.tp){
@@ -72,13 +76,16 @@ var applyLandingTileEffect = function(position) {
   if(tile.backward){
     new_pos -= tile.backward;
   }
+  if(tile.bonus){
+    GameEngine.changeScore(player_id, tile.bonus);
+  }
   return Math.min(board_size-1, Math.max(0, new_pos));
 }
 
 var changePosition = function(player_id, increment) {
   var current_pos = positions.getScore(player_id);
   var new_pos = Math.min(board_size-1, Math.max(0, current_pos + increment));
-  positions.setScore(player_id, applyLandingTileEffect(new_pos));
+  positions.setScore(player_id, applyLandingTileEffect(player_id, new_pos));
 }
 
 var normalRoll = function(player_id, socketMessage){
