@@ -9,26 +9,20 @@ var game = new QuizMinigame();
 // Game Logic
 // Getting the riddle
 var httpRequestCallback = function(html){
-  try {
-    var c = Cheerio.load(html);
+  var json = JSON.parse(html);
+  var question = json[0]['question'];
+  var answer = json[0]['answer'];
 
-    var question = c('.query-title-link').html();
-    var answer = c('.su-spoiler-content').html();
-
-    if(answer.length > 30){
-      console.log("Too long, repick");
-      requestRiddle();
-    } else {
-      game.setAnswer(question, answer);
-    }
-
-  } catch (error) {
+  if(answer.length > 30){
+    console.log("Too long, repick");
     requestRiddle();
+  } else {
+    game.setAnswer(question, answer);
   }
 }
 
 var requestRiddle = function() {
-  Request('https://trivia.fyi/random-trivia-questions/').then(httpRequestCallback);
+  Request('https://www.randomtriviagenerator.com/questions?limit=6&page=1').then(httpRequestCallback);
 }
 
 requestRiddle();
