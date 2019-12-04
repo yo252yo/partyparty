@@ -15,6 +15,7 @@ can probs be done by repurposing the quiz module, even without a decisive answer
 - broadcast the theme to the maxigame
 - scoreBoard
 -- move out of minigames lib to main libs
+-- what about equality!!
 
 
 > Add more to the themes folder
@@ -35,3 +36,7 @@ can probs be done by repurposing the quiz module, even without a decisive answer
 
 - trivia quiz:
 add categories ? https://www.randomtriviagenerator.com/
+
+- deslettres:
+letter distribution http://www.thecountdownpage.com/letters.htm
+ask people for console and voyelle

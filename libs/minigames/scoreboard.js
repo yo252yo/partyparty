@@ -28,6 +28,24 @@ class Scoreboard {
     return argMin;
   }
 
+  getMaxScore() {
+    var max;
+    var argMax = Scoreboard.getDefaultWinner();
+
+    if (this.scores.length == 0){
+      return argMax;
+    }
+
+    for (var id in this.scores){
+      if (!max || this.scores[id] > max){
+        max = this.scores[id];
+        argMax = id;
+      }
+    }
+
+    return argMax;
+  }
+
   setScore(player, score) {
     this.scores[player] = score;
     console.log(player + " got " + score);

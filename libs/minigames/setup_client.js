@@ -10,8 +10,6 @@ var elem = document.createElement('div');
 elem.innerHTML = '<div class="textbox_1" style="background-color:white;">READY CHECK (click anywhere)<div id="readycheck"></div></div>';
 document.body.appendChild(elem);
 
-console.log("AAAAAAA");
-
 var moduleListener = function(event){
   try { // only expects objects
     var object = JSON.parse(event.data);

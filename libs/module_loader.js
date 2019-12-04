@@ -58,7 +58,7 @@ class ModuleLoader {
   }
 
   static getMaxiGame() {
-    return "snakesandladders";
+    return "snakesandladder";
   }
 
   static endMinigame(){
