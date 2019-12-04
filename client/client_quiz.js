@@ -1,7 +1,7 @@
 // Define the function on window to make sure it's accessible from the HTML.
-window.sendAnswer = function(){
+window.sendAnswer = function(prefix){
   var proposal = document.getElementById("answer").value;
-  ClientSocket.send("ProposeQuizzModuleAnswer", proposal);
+  ClientSocket.send(prefix, proposal);
   document.getElementById("answer").value = "";
   document.getElementById("answer").focus();
 }
@@ -19,7 +19,7 @@ var initializeQuizModule = function(color){
   createIddDiv(quizbox, 'timer');
 
 	var form = document.createElement("form");
-  form.addEventListener('submit', window.sendAnswer);
+  form.addEventListener('submit', function(){window.sendAnswer("ProposeQuizzModuleAnswer")});
   form.action="javascript:void(0);";
   quizbox.appendChild(form);
 
@@ -30,7 +30,7 @@ var initializeQuizModule = function(color){
   var button = document.createElement("input");
   button.type = "button";
   button.value = "propose";
-  form.addEventListener('click', window.sendAnswer);
+  form.addEventListener('click', function(){window.sendAnswer("ProposeQuizzModuleAnswer")});
   form.appendChild(button);
 
   document.getElementById("answer").focus();

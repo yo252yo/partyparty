@@ -1,9 +1,9 @@
 document.getElementById("answer").focus();
 displayTimer(60);
 
-window.sendAnswer = function(){
+window.sendAnswer = function(prefix){
   var proposal = document.getElementById("answer").value;
-  ClientSocket.send("ProposeDesLettresAnswer", proposal);
+  ClientSocket.send(prefix, proposal);
   document.getElementById("answer").value = "";
   document.getElementById("answer").focus();
 }
