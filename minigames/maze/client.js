@@ -78,7 +78,7 @@ var y = 1;
 var broadcastPosition = function(){
   ClientSocket.send("MazeMyPosition",  (x*width+y).toString() + "/" + ClientSocket.webSocket.pp_data.color);
 }
-setInterval(broadcastPosition, 1500 + Math.floor(Math.random() * 1000));
+var interval = setInterval(broadcastPosition, 1500 + Math.floor(Math.random() * 1000));
 
 var goUp = function(e) {
   maze[x*width+y]=0;
@@ -156,6 +156,7 @@ var moduleListener = function(event){
       document.removeEventListener('press_left', goLeft);
       document.removeEventListener('press_right', goRight);
       document.removeEventListener('press_down', goDown);
+      clearInterval(interval);
       alert(event.data);
       break;
     default:
