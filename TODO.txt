@@ -38,5 +38,4 @@ can probs be done by repurposing the quiz module, even without a decisive answer
 add categories ? https://www.randomtriviagenerator.com/
 
 - deslettres:
-letter distribution http://www.thecountdownpage.com/letters.htm
 ask people for console and voyelle

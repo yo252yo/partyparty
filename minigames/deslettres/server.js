@@ -8,13 +8,23 @@ var scores = new Scoreboard();
 var game_ended = false;
 
 var letters = [];
-var consonnes = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'];
-var voyelles = ['a', 'i', 'u', 'e', 'o'];
+var consonnes = [['b',2], ['c',3], ['d',6], ['f',2], ['g',3], ['h',2], ['j',1], ['k',1], ['l',5], ['m',4], ['n',8], ['p',4], ['q',1], ['r',9], ['s',9], ['t',9], ['v',1], ['w',1], ['x',1], ['y',1], ['z',1]];
+var voyelles = [['a',15], ['i',13], ['u',5], ['e',21], ['o',13]];
 
 // Game logic
 var randLetter = function(array){
-  var letter = array[Math.floor(Math.random() * array.length)];
-  letters.push(letter);
+  var total = 0;
+  array.forEach(pair => total += pair[1]);
+  var random = Math.floor(Math.random() * total);
+
+  var index = 0;
+  while (random > 0){
+    random -= array[index][1];
+    index ++;
+  }
+  index --; // We overshoot since we're stopping when random gets negative.
+
+  letters.push(array[index][0]);
 }
 
 var consonne = function(){
