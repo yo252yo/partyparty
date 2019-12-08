@@ -36,6 +36,3 @@ can probs be done by repurposing the quiz module, even without a decisive answer
 
 - trivia quiz:
 add categories ? https://www.randomtriviagenerator.com/
-
-- deslettres:
-ask people for console and voyelle

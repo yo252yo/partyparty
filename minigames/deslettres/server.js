@@ -6,6 +6,8 @@ var CheckWord = require('check-word');
 var wordCheck = CheckWord('en');
 var scores = new Scoreboard();
 var game_ended = false;
+var game_started = false;
+var num_letters = 8;
 
 var letters = [];
 var consonnes = [['b',2], ['c',3], ['d',6], ['f',2], ['g',3], ['h',2], ['j',1], ['k',1], ['l',5], ['m',4], ['n',8], ['p',4], ['q',1], ['r',9], ['s',9], ['t',9], ['v',1], ['w',1], ['x',1], ['y',1], ['z',1]];
@@ -28,23 +30,22 @@ var randLetter = function(array){
 }
 
 var consonne = function(){
+  if (game_started){ return; }
   randLetter(consonnes);
+  checkLetters();
 }
 var voyelle = function(){
+  if (game_started){ return; }
   randLetter(voyelles);
+  checkLetters();
 }
 
-var initializeLetters = function(){
-  for (var i = 0; i< 9; i++){
-    if (Math.random() < 0.35){
-      voyelle();
-    } else{
-      consonne();
-    }
-  }
+var checkLetters = function(){
   AllPlayers.broadcastMessage("DeslettresLettres", letters.join());
+  if (letters.length == num_letters){
+    game_started = true;
+  }
 }
-initializeLetters();
 
 // End game handling
 var endGame = function(){
@@ -78,6 +79,12 @@ var moduleListener = function(event, webSocket){
 
       webSocket.send("DeslettresYourword|" + proposal + " (" + score + ")");
       scores.setScore(webSocket.pp_data.player_id, score);
+      break;
+    case "DesLettresAskConsonne":
+      consonne();
+      break;
+    case "DesLettresAskVoyelle":
+      voyelle();
       break;
     default:
   }

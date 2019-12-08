@@ -14,6 +14,9 @@ var moduleListener = function(event){
     case "DeslettresLettres":
       var letters = event.data.split("|")[1];
       document.getElementById("letters").innerHTML = letters;
+      if (letters.split(",").length == 8) {
+        document.getElementById("askbuttons").style.display = "none";
+      }
       break;
     case "DeslettresYourword":
       var letters = event.data.split("|")[1];

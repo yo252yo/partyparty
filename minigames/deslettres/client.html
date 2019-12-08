@@ -2,6 +2,12 @@
 
 <div class="textbox_1" style="background-color:pink;">
   <div id="letters">letters coming soon</div>
+  <div id="askbuttons">
+    <input type="button" value="consonne" onclick="ClientSocket.send('DesLettresAskConsonne');" />
+    <input type="button" value="voyelle" onclick="ClientSocket.send('DesLettresAskVoyelle');" />
+  </div>
+
+
   Your word:
   <div class="textbox_1" style="background-color:pink;" id="yourword"></div>
 
