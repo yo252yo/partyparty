@@ -20,7 +20,7 @@ var randLetter = function(array){
   var random = Math.floor(Math.random() * total);
 
   var index = 0;
-  while (random > 0){
+  while (random >= 0){
     random -= array[index][1];
     index ++;
   }
