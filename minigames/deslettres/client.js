@@ -14,7 +14,7 @@ var moduleListener = function(event){
     case "DeslettresLettres":
       var letters = event.data.split("|")[1];
       document.getElementById("letters").innerHTML = letters;
-      if (letters.split(",").length == 8) {
+      if (letters.split(",").length == 10) {
         document.getElementById("askbuttons").style.display = "none";
       }
       break;

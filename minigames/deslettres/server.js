@@ -7,7 +7,7 @@ var wordCheck = CheckWord('en');
 var scores = new Scoreboard();
 var game_ended = false;
 var game_started = false;
-var num_letters = 8;
+var num_letters = 10;
 
 var letters = [];
 var consonnes = [['b',2], ['c',3], ['d',6], ['f',2], ['g',3], ['h',2], ['j',1], ['k',1], ['l',5], ['m',4], ['n',8], ['p',4], ['q',1], ['r',9], ['s',9], ['t',9], ['v',1], ['w',1], ['x',1], ['y',1], ['z',1]];
