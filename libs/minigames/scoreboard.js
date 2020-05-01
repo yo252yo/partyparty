@@ -46,6 +46,12 @@ class Scoreboard {
     return argMax;
   }
 
+  incrementScore(player) {
+    if (! this.scores[player]) { this.scores[player] = 0; }
+    this.scores[player] ++;
+    console.log(player + " got " + this.scores[player]);
+  }
+
   setScore(player, score) {
     this.scores[player] = score;
     console.log(player + " got " + score);
