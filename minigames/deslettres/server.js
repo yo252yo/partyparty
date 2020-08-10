@@ -4,14 +4,19 @@ var MinigamesCommon = require('./minigames/common.js');
 var CheckWord = require('check-word');
 
 var wordCheck = CheckWord('en');
+var wordCheck2 = CheckWord('fr');
 var scores = new Scoreboard();
 var game_ended = false;
 var game_started = false;
-var num_letters = 10;
+var num_letters = 13;
 
 var letters = [];
-var consonnes = [['b',2], ['c',3], ['d',6], ['f',2], ['g',3], ['h',2], ['j',1], ['k',1], ['l',5], ['m',4], ['n',8], ['p',4], ['q',1], ['r',9], ['s',9], ['t',9], ['v',1], ['w',1], ['x',1], ['y',1], ['z',1]];
-var voyelles = [['a',15], ['i',13], ['u',5], ['e',21], ['o',13]];
+var consonnes = [['b',2], ['c',3], ['d',6], ['f',2], ['g',3], ['h',2], ['j',1], ['k',1], ['l',5], ['m',4], ['n',8], ['p',4], ['q',1], ['r',9], ['s',9], ['t',9], ['v',1], ['w',1], ['x',1], ['y',1], ['z',1],
+['b',2], ['c',2], ['d',3], ['f',2], ['g',2], ['h',2], ['j',1], ['k',1], ['l',5], ['m',3], ['n',6], ['p',2], ['q',1], ['r',6], ['s',6], ['t',6], ['v',2], ['w',1], ['x',1], ['y',1], ['z',1],
+];
+var voyelles = [['a',15], ['i',13], ['u',5], ['e',21], ['o',13],
+['a',9], ['i',8], ['u',6], ['e',15], ['o',6],
+];
 
 // Game logic
 var randLetter = function(array){
@@ -62,7 +67,7 @@ var moduleListener = function(event, webSocket){
       if (game_ended) { return; }
 
       var proposal = event.data.split("|")[1].toLowerCase();
-      if (! wordCheck.check(proposal)){
+      if (! (wordCheck.check(proposal) || wordCheck2.check(proposal))){
         return;
       }
       var copy = proposal;
@@ -78,6 +83,7 @@ var moduleListener = function(event, webSocket){
       }
 
       webSocket.send("DeslettresYourword|" + proposal + " (" + score + ")");
+      AllPlayers.broadcastMessage("DeslettresWord", proposal + " (" + score + ")");
       scores.setScore(webSocket.pp_data.player_id, score);
       break;
     case "DesLettresAskConsonne":

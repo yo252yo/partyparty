@@ -14,13 +14,17 @@ var moduleListener = function(event){
     case "DeslettresLettres":
       var letters = event.data.split("|")[1];
       document.getElementById("letters").innerHTML = letters;
-      if (letters.split(",").length == 10) {
+      if (letters.split(",").length == 13) {
         document.getElementById("askbuttons").style.display = "none";
       }
       break;
     case "DeslettresYourword":
       var letters = event.data.split("|")[1];
       document.getElementById("yourword").innerHTML = letters;
+      break;
+    case "DeslettresWord":
+      var letters = event.data.split("|")[1];
+      document.getElementById("answers").innerHTML = letters + "<br />" + document.getElementById("answers").innerHTML;
       break;
     case "VictoryAnnouncement":
       alert(event.data);
