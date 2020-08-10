@@ -15,6 +15,13 @@ var httpRequestCallback = function(html){
   try {
     var c = Cheerio.load(html);
     var src = c('.preview')[0].attribs.src;
+    var title = "Unbeteitelt";
+    try {
+      title = c('.title.outbound')[0].children[0].data;
+    } catch (e){ console.log(e);}
+    console.log(title);
+    proposals["dummy"] = title;
+
     if (!src){
       requestImg();
     }
@@ -55,7 +62,9 @@ var moduleListener = function(event, webSocket){
       break;
     case "CaptionStockVote":
       var votefor = event.data.split("|")[1];
-      scores.incrementScore(votefor);
+      if (votefor != "dummy") {
+        scores.incrementScore(votefor);
+      }
     default:
   }
 }
