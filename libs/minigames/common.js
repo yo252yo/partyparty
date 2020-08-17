@@ -5,11 +5,6 @@ var ModuleLoader = require('../module_loader.js');
 
 class MinigamesCommon {
   static simpleOnePlayerWin(winner, delay_in_redirect){
-    if (! winner){
-      winner = Scoreboard.getDefaultWinner();
-    } else {
-      GameEngine.changeScore(winner, 1);
-    }
     console.log("Minigame ended with winner: " + winner);
 
     AllPlayers.broadcastMessage("VictoryAnnouncement", winner);
@@ -17,6 +12,11 @@ class MinigamesCommon {
     if (! delay_in_redirect) delay_in_redirect = 1000;
     setTimeout(function(){
       ModuleLoader.endMinigame();
+      if (! winner){
+        winner = Scoreboard.getDefaultWinner();
+      } else {
+        GameEngine.changeScore(winner, 1);
+      }
     }, delay_in_redirect);
   }
 }

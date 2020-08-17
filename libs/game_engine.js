@@ -16,6 +16,10 @@ class GameEngine {
     return GameEngine.scoreBoard.getScore(id);
   }
 
+  static getAllScores() {
+    return GameEngine.scoreBoard;
+  }
+
   static changeScore(id, increment) {
     return GameEngine.scoreBoard.setScore(id, GameEngine.scoreBoard.getScore(id) + increment);
   }

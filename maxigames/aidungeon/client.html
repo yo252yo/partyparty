@@ -1,0 +1,12 @@
+<h1>Welcome</h1>
+You are <span id="player_id_div"></span><br />
+<input type="button" value="RerollName (dont overuse plz)" onclick="ClientSocket.send('RerollNameRequest|');" />
+<br />
+
+Now playing <div id="all_players_div"></div>
+<hr />
+<input type="button" value="Start Mini Game" onclick="ClientSocket.send('StartRandomMinigame|');" />
+<input type="text" value="78a15907-9803-49c7-837a-e1f9e8d3c33a" id="dungeon_id">
+<hr />
+<div style="position:absolute;width:100%;height:60%;opacity:50%;background:white;" id="dungeonblocker"></div>
+<iframe id="dungeonframe" style="width:100%;height:60%"></iframe>
