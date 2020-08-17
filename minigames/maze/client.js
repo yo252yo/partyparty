@@ -78,7 +78,7 @@ var y = 1;
 var broadcastPosition = function(){
   ClientSocket.send("MazeMyPosition",  (x*width+y).toString() + "/" + ClientSocket.webSocket.pp_data.color);
 }
-var interval = setInterval(broadcastPosition, 1500 + Math.floor(Math.random() * 1000));
+var interval = setInterval(broadcastPosition, Math.floor(Math.random() * 500));
 
 var goUp = function(e) {
   maze[x*width+y]=0;
