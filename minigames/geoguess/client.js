@@ -55,8 +55,12 @@ var moduleListener = function(event){
     switch(event.data.split("|")[0]) {
       case "GeoguessCoords":
         coordinates = event.data.split("|")[1];
+        var lat = Math.round(coordinates.split(",")[0]*1e6).toString(36);
+        var long = Math.round(coordinates.split(",")[1]*1e6).toString(36);
+        console.log("http://randomstreetview.com/#" + lat + "_" + long + "_u_e_5");
+        document.getElementById("geoframe").src="http://randomstreetview.com/#" + lat + "_" + long + "_u_e_5";
         //document.getElementById("geoframe").src="https://www.gps-coordinates.net/street-view/@" + coordinates + ",h134,p8,z1";
-        window.open("https://www.instantstreetview.com/@" + coordinates + ",h134,p8,z1");
+        //window.open("https://www.instantstreetview.com/@" + coordinates + ",h134,p8,z1");
         break;
       case "VictoryAnnouncement":
         console.log("Drawing correction at " + coordinates);
