@@ -13,26 +13,29 @@ var distances = new Scoreboard();
 var coordinatesRecord = new Scoreboard();
 
 // Game logic
-var loadCoordinatesFromGeoguessr = function(){
-  // Asking a random latitude and longitude on street view results in a blank map.
-  // To be sure that the location exist, we ask geoguessr.
-  Request.post('https://www.geoguessr.com/api/v3/games/', {
-    json: {map: "trial-world", type: "standard"}
-  }, (error, res, body) => {
-    console.log("Request done!");
-    if (error) {
-      console.error("Error with geoguessr: " + error);
-      loadCoordinatesFromGeoguessr();
-    }
-    // We cut the precision to avoid falling in an uncovered spot (discrepency between geoguessr and gps-coordinates.net)
-    lat = body.rounds[0].lat.toFixed(4);
-    lng = body.rounds[0].lng.toFixed(4);
+// Game Logic
+// Getting the riddle
+var httpRequestCallback = function(html){
+  try {
+    var c = Cheerio.load(html);
+    var locations= c('script').get()[5].children[0].data;
+    var rx = /"lat":"([^"]*)","lng":"([^"]*)"/g;
+    var parse = rx.exec(locations);
+    lat = parse[1];
+    lng = parse[2];
 
     AllPlayers.broadcastMessage("GeoguessCoords", lat + "," + lng);
     console.log("Coordinates:" + lat + "," + lng);
-  })
+
+  } catch (error) {
+    fetchCoordinates();
+  }
 }
-loadCoordinatesFromGeoguessr();
+var fetchCoordinates = function() {
+  Request('https://randomstreetview.com/').then(httpRequestCallback);
+}
+fetchCoordinates();
+
 
 // End game handling
 var endGame = function(){

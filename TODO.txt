@@ -43,3 +43,7 @@ can probs be done by repurposing the quiz module, even without a decisive answer
 add categories ? https://www.randomtriviagenerator.com/
 
 - https://damn.dog/#135
+
+
+
+geoguessr always picks same locations
