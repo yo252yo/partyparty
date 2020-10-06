@@ -1,6 +1,6 @@
 module.exports = [
-"C", 
-"C++", 
+"C",
+"C++",
 "PHP",
 "Python",
 "OCAML",
