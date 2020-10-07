@@ -33,4 +33,9 @@ var listener = function(event){
 
 ClientSocket.plugModuleListener(listener);
 
-document.getElementById("dungeonframe").src = "https://play.aidungeon.io/play/" + document.getElementById("dungeon_id").value;
+var url = window.location.search.substr(1);
+var dungeon = document.getElementById("dungeon_id").value;
+if (url){
+  dungeon = url;
+}
+document.getElementById("dungeonframe").src = "https://play.aidungeon.io/play/" + dungeon;
