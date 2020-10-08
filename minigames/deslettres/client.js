@@ -1,5 +1,5 @@
 document.getElementById("answer").focus();
-displayTimer(60);
+displayTimer(75);
 
 window.sendAnswer = function(prefix){
   var proposal = document.getElementById("answer").value;

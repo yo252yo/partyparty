@@ -59,7 +59,7 @@ var endGame = function(){
   game_ended = true;
   MinigamesCommon.simpleOnePlayerWin(scores.getMaxScore());
 }
-setTimeout(endGame, 60000); // Deadline
+setTimeout(endGame, 75000); // Deadline
 
 var moduleListener = function(event, webSocket){
   switch(event.data.split("|")[0]) {

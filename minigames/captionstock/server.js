@@ -20,14 +20,14 @@ var httpRequestCallback = function(html){
       title = c('.title.outbound')[0].children[0].data;
     } catch (e){ console.log(e);}
     console.log(title);
-    proposals["dummy"] = title;
+    proposals["dummy"] = [title.toLowerCase()];
 
     if (!src){
       requestImg();
     }
 
     AllPlayers.broadcastMessage("CaptionStockImg", src);
-    setTimeout(broadcastIdeas, 30000);
+    setTimeout(broadcastIdeas, 60000);
   } catch (error) {
     requestImg();
   }
@@ -58,7 +58,10 @@ var moduleListener = function(event, webSocket){
   switch(event.data.split("|")[0]) {
     case "ProposeCaption":
       var proposal = event.data.split("|")[1].toLowerCase();
-      proposals[webSocket.pp_data.player_id] = proposal;
+      if(!proposals[webSocket.pp_data.player_id]){
+        proposals[webSocket.pp_data.player_id] = [];
+      }
+      proposals[webSocket.pp_data.player_id].push(proposal);
       break;
     case "CaptionStockVote":
       var votefor = event.data.split("|")[1];
