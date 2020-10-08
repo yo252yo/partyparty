@@ -80,12 +80,19 @@ function getPlayerListStringFromSocketObject(object){
 	var all_players_ids = "";
 	for (var i in object.players) {
 		var player = object.players[i];
-    all_players_ids += "<span style='color:" + player.pp_data.color;
+    all_players_ids += "<div style='margin:5px;width:200px;height:320px;padding:5px;display:inline-block;overflow:hidden;color:" + player.pp_data.color;
     all_players_ids += "; background-color:" + invertColor(player.pp_data.color);
     if (player.pp_data.player_id == ClientSocket.getPlayerId()) {
 			 all_players_ids += "; font-weight:bold;"
 		 };
-    all_players_ids += "'>" + player.score + " - " +  player.pp_data.player_id + "</span><br />";
+    all_players_ids += "'>";
+    all_players_ids += player.score + "-" +  player.pp_data.player_id + "<br /><div style='position:relative;'>";
+		var id = player.pp_data.player_id.replace(/([A-Z])/g, ' $1').split(" ");
+	  all_players_ids += "<img src='client/assets/avatars/modifiers/" + id[1] + "_above.png' style='z-index:4;position:absolute;width:190px;height:300px;' />";
+	  all_players_ids += "<img src='client/assets/avatars/nouns/" + id[2] + ".png' style='z-index:3;position:absolute;width:80px;height:80px;left:55px;top:50px' />";
+	  all_players_ids += "<img src='client/assets/avatars/modifiers/" + id[1] + "_below.png' style='z-index:2;position:absolute;width:190px;height:300px;' />";
+
+    all_players_ids += "</div></div>";
 	}
 	return all_players_ids;
 }

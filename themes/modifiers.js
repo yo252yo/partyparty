@@ -1,6 +1,6 @@
 module.exports = [
-"Woke", 
-"Chinese", 
+"Woke",
+"Chinese",
 "Mathematical",
 "Dinosaur",
 "Robot",
@@ -21,6 +21,7 @@ module.exports = [
 "Ninja",
 "Wizard",
 "Fairy",
+"Hipster",
 "Super",
 "Mecha",
 "Sexy",

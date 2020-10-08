@@ -1,6 +1,6 @@
 module.exports = [
-"Monopoly", 
-"Scrabble", 
+"Monopoly",
+"Scrabble",
 "Risk",
 "Clue",
 "Battleship",
@@ -8,7 +8,7 @@ module.exports = [
 "Jenga",
 "TrivialPursuit",
 "Twister",
-"7Wonders",
+"SevenWonders",
 "Connect4",
 "Life"
 ];

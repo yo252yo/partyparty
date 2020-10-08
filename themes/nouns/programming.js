@@ -7,6 +7,6 @@ module.exports = [
 "C#",
 "Ruby",
 "Java",
-"JavaScript",
+"Javascript",
 "Haskell"
 ];
