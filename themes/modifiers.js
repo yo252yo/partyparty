@@ -1,41 +1,14 @@
-module.exports = [
-"Woke",
-"Chinese",
-"Mathematical",
-"Dinosaur",
-"Robot",
-"Steampunk",
-"Medieval",
-"Western",
-"Viking",
-"Disco",
-"Christmas",
-"Black",
-"Spider",
-"Werewolf",
-"Shark",
-"Dragon",
-"Nazi",
-"Communist",
-"Pirate",
-"Ninja",
-"Wizard",
-"Fairy",
-"Hipster",
-"Super",
-"Mecha",
-"Sexy",
-"Racist",
-"Magic",
-"Baby",
-"Slime",
-"Nuclear",
-"Laser",
-"Quantum",
-"Darth",
-"Anime",
-"Kaizer",
-"Dwarf",
-"Sad",
-"Millenial"
-];
+
+var Fs = require('fs');
+var raw = Fs.readdirSync("./client/assets/avatars/modifiers");
+
+var modules = [];
+
+for (var i in raw){
+  var s = raw[i].split("_")[0];
+  if (raw.includes(s + "_above.png") && raw.includes(s + "_below.png")){
+    modules.push(s);
+  }
+}
+
+module.exports = modules;
