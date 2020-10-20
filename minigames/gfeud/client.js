@@ -13,7 +13,6 @@ var moduleListener = function(event){
     case "GFeudPrompt":
       var src = event.data.split("|")[1];
       document.getElementById("prompt").innerHTML = src;
-      displayTimer(60);
       break;
     case "VictoryAnnouncement":
       alert(event.data);
@@ -23,4 +22,5 @@ var moduleListener = function(event){
 
 }
 
+displayTimer(60);
 ClientSocket.plugModuleListener(moduleListener);
