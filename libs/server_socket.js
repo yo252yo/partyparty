@@ -51,6 +51,16 @@ class ServerSocket {
         var GameEngine = require('./game_engine.js');
         GameEngine.resetWholeGame();
         break;
+      case "ChangeTheme":
+        var GameEngine = require('./game_engine.js');
+        GameEngine.pickTheme();
+        GameEngine.resetWholeGame();
+        break;
+      case "ChangeMaxiGame":
+        var g = event.data.split("|")[1];
+        var GameEngine = require('./game_engine.js');
+        GameEngine.resetWholeGame(g);
+        break;
       case "RerollNameRequest":
         var GameEngine = require('./game_engine.js');
         GameEngine.setNewIdToPlayer(webSocket);

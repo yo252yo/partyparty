@@ -21,7 +21,7 @@ can probs be done by repurposing the quiz module, even without a decisive answer
 
 
 > Add more to the themes folder
-
+> clientquiz librarie conflicts with custom sendanswer functions!
 
 > Minigames
 - click the square:
@@ -38,12 +38,15 @@ can probs be done by repurposing the quiz module, even without a decisive answer
 
 - deslettres:
 -- concurrency issue
+-- accents in french
 
 - trivia quiz:
 add categories ? https://www.randomtriviagenerator.com/
 
 - https://damn.dog/#135
 
+- Geoguess:
+-- mb the confirmation cross is not public anymore
 
-- stock pics naming:
-keep all proposals and stay longer
+- gfeud:
+-- probably need tips xDD

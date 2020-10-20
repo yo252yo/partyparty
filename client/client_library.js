@@ -96,3 +96,15 @@ function getPlayerListStringFromSocketObject(object){
 	}
 	return all_players_ids;
 }
+
+function server_reset(g){
+	ClientSocket.send('ResetWholeGame|' + g);
+}
+
+function server_change_game(g){
+	ClientSocket.send('ChangeMaxiGame|' + g);
+}
+
+function server_change_theme(){
+	ClientSocket.send('ChangeTheme|');
+}

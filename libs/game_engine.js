@@ -25,18 +25,19 @@ class GameEngine {
     return GameEngine.scoreBoard.setScore(id, GameEngine.scoreBoard.getScore(id) + increment);
   }
 
-  static initializeModule(){
+  static initializeModule(maxigame){
     GameEngine.usedIds = [];
     GameEngine.theme = "";
     GameEngine.pickTheme();
     GameEngine.scoreBoard = new Scoreboard(true); // avoid mutual inclusion.
+    GameEngine.setMaxigame(maxigame);
   }
 
-  static resetWholeGame(){
+  static resetWholeGame(maxigame){
     console.log("RESETING GAME");
-    GameEngine.initializeModule();
+    GameEngine.initializeModule(maxigame);
     var ModuleLoader = require('./module_loader.js');
-    ModuleLoader.loadModule("maxigames", ModuleLoader.getMaxiGame());
+    ModuleLoader.loadModule("maxigames", GameEngine.maxigame);
 
     AllPlayers.doToAllClients(function (client) {
       GameEngine.setNewIdToPlayer(client);
@@ -81,8 +82,13 @@ class GameEngine {
     GameEngine.theme = Themes.pickTheme();
     console.log("Theme set:" + GameEngine.theme);
   }
+
+  static setMaxigame(game){
+    GameEngine.maxigame = game;
+    console.log("Maxigame set:" + GameEngine.maxigame);
+  }
 }
 
-GameEngine.initializeModule();
+GameEngine.initializeModule("minigamechoser");
 
 module.exports = GameEngine;

@@ -1,5 +1,6 @@
 var Fs = require('fs');
 var AllPlayers = require('./all_players.js');
+var GameEngine = require('./game_engine.js');
 
 
 class ModuleLoader {
@@ -58,7 +59,7 @@ class ModuleLoader {
   }
 
   static getMaxiGame() {
-    return "minigamechoser";//aidungeon
+    return GameEngine.maxigame;
   }
 
   static endMinigame(){
