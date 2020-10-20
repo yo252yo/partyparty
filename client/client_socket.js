@@ -24,6 +24,7 @@ class ClientSocket {
         if (! ClientSocket.webSocket.pp_data) { ClientSocket.webSocket.pp_data = {}; }
         ClientSocket.webSocket.pp_data.player_id = message.split("/")[0];
         ClientSocket.webSocket.pp_data.color = message.split("/")[1];
+        ClientSocket.webSocket.theme = message.split("/")[2];
         console.log("ID received:" + ClientSocket.webSocket.pp_data.player_id);
         break;
       default:
@@ -37,6 +38,10 @@ class ClientSocket {
 
   static getPlayerColor() {
     return ClientSocket.webSocket.pp_data.color;
+  }
+
+  static getTheme() {
+    return ClientSocket.webSocket.theme;
   }
 
   static onSocketMessage(event) {

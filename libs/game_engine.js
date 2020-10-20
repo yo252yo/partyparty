@@ -1,6 +1,7 @@
 var Fs = require('fs');
 var AllPlayers = require('./all_players.js');
 var Scoreboard = require('./minigames/scoreboard.js');
+var Themes = require('./themes.js');
 
 class GameEngine {
   static getAllPossibleColors(){
@@ -51,8 +52,9 @@ class GameEngine {
   }
 
   static getNewId(){
-    var nouns = require('../themes/nouns/' + GameEngine.theme + '.js');
-    var modifiers = require('../themes/modifiers.js');
+    var modifiers = Themes.getModifiers();
+    var nouns = Themes.getNouns(GameEngine.theme);
+
     var rollProposal = function(){
       return modifiers[Math.floor(Math.random()*modifiers.length)] + nouns[Math.floor(Math.random()*nouns.length)];
     }
@@ -72,12 +74,11 @@ class GameEngine {
     webSocket.pp_data.color = GameEngine.getRandomColor();
 
     webSocket.send("HereIsYourId" + "|" + webSocket.pp_data.player_id + "/" +
-      webSocket.pp_data.color);
+      webSocket.pp_data.color + "/" + GameEngine.theme);
   }
 
   static pickTheme() {
-    var themes = Fs.readdirSync("./themes/nouns/");
-    GameEngine.theme = themes[Math.floor(Math.random() * themes.length)].split(".")[0];
+    GameEngine.theme = Themes.pickTheme();
     console.log("Theme set:" + GameEngine.theme);
   }
 }
