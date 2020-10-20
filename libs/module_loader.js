@@ -58,7 +58,7 @@ class ModuleLoader {
   }
 
   static getMaxiGame() {
-    return "aidungeon";
+    return "minigamechoser";//aidungeon
   }
 
   static endMinigame(){
