@@ -77,13 +77,17 @@ var formatAnswers = function(){
   return result;
 }
 
+var trueEndGame = function(){
+MinigamesCommon.simpleOnePlayerWin(scores.getMaxScore());
+}
+
 
 var endGame = function(){
   if (game_ended) { return; }
   AllPlayers.broadcastMessage("GFeudPrompt", answers.join("<br/>"));
 
   game_ended = true;
-  MinigamesCommon.simpleOnePlayerWin(scores.getMaxScore());
+  setTimeout(trueEndGame, 10000); 
 }
 setTimeout(endGame, 60000); // Deadline
 
