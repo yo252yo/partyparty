@@ -97,7 +97,7 @@ var endGame = function(){
   game_ended = true;
   setTimeout(trueEndGame, 15000);
 }
-setTimeout(endGame, 60000); // Deadline
+setTimeout(endGame, 90000); // Deadline
 
 var tip = function(){
   if (game_ended) { return; }

@@ -22,5 +22,5 @@ var moduleListener = function(event){
 
 }
 
-displayTimer(60);
+displayTimer(90);
 ClientSocket.plugModuleListener(moduleListener);
