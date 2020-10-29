@@ -49,4 +49,4 @@ add categories ? https://www.randomtriviagenerator.com/
 -- mb the confirmation cross is not public anymore
 
 - gfeud:
--- probably need tips xDD
+-- if a word is fully tipped out it can still count towards score

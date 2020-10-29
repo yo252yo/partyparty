@@ -49,7 +49,7 @@ class GameEngine {
   }
 
   static broadcastPlayersList() {
-    GameEngine.scoreBoard.broadcastScores("CurrentPlayerList");
+    GameEngine.scoreBoard.broadcastScores("CurrentPlayerList", GameEngine.theme);
   }
 
   static getNewId(){

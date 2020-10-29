@@ -78,12 +78,15 @@ class Scoreboard {
     }
   }
 
-  broadcastScores(messageKey){
+  broadcastScores(messageKey, theme){
     var object = {};
     object.messageKey = messageKey;
     if(! messageKey) { messageKey = "BroadcastScores";}
 
     object.players = [];
+    if(theme){
+      object.theme = theme;
+    }
     var all_data = AllPlayers.getAllPpData();
     for (var i in all_data){
       var pp_data = all_data[i];

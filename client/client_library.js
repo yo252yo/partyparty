@@ -94,6 +94,10 @@ function getPlayerListStringFromSocketObject(object){
 
     all_players_ids += "</div></div>";
 	}
+	if(object.theme){
+		console.log(object.theme);
+		document.body.style.backgroundImage = "url('client/assets/themes/" + object.theme + ".png')";
+	}
 	return all_players_ids;
 }
 

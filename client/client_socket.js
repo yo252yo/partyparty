@@ -9,7 +9,7 @@ class ClientSocket {
   static receiveSocketObject(object) {
     if(object.document_html){
       // New page
-      document.body.innerHTML = object.document_html;
+      document.getElementById("body").innerHTML = object.document_html;
       ClientSocket.resetModuleListener();
     }
     if(object.script){
