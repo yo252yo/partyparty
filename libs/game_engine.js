@@ -89,6 +89,6 @@ class GameEngine {
   }
 }
 
-GameEngine.initializeModule("minigamechoser");
+GameEngine.initializeModule("aidungeon");
 
 module.exports = GameEngine;
