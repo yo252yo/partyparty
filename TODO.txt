@@ -50,6 +50,3 @@ add categories ? https://www.randomtriviagenerator.com/
 
 - gfeud:
 -- if a word is fully tipped out it can still count towards score
-
-
-readycheck and cube dont disappear probably because ofbackground pic
