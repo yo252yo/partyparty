@@ -34,10 +34,13 @@ class GameEngine {
   }
 
   static resetWholeGame(maxigame){
+    if (!maxigame){
+      maxigame = GameEngine.maxigame;
+    }
     console.log("RESETING GAME");
     GameEngine.initializeModule(maxigame);
     var ModuleLoader = require('./module_loader.js');
-    ModuleLoader.loadModule("maxigames", GameEngine.maxigame);
+    ModuleLoader.loadModule("maxigames", maxigame);
 
     AllPlayers.doToAllClients(function (client) {
       GameEngine.setNewIdToPlayer(client);
