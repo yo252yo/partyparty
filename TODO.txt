@@ -50,3 +50,6 @@ add categories ? https://www.randomtriviagenerator.com/
 
 - gfeud:
 -- if a word is fully tipped out it can still count towards score
+
+- quote and captionstock dont present propositions all together grouped by player
+- quote has a leading space in the real answer
