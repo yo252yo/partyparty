@@ -18,7 +18,7 @@ var coordinatesRecord = new Scoreboard();
 var httpRequestCallback = function(html){
   try {
     var c = Cheerio.load(html);
-    var locations= c('script').get()[5].children[0].data;
+    var locations= c('script').get()[6].children[0].data;
     var rx = /"lat":"([^"]*)","lng":"([^"]*)"/g;
     var parse = rx.exec(locations);
     lat = parse[1];

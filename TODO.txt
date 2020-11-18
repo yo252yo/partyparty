@@ -53,3 +53,7 @@ add categories ? https://www.randomtriviagenerator.com/
 
 - quote and captionstock dont present propositions all together grouped by player
 - quote has a leading space in the real answer
+
+
+
+can we do some sort of boardgamearena integration
