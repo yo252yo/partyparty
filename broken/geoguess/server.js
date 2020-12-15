@@ -17,10 +17,8 @@ var coordinatesRecord = new Scoreboard();
 // Getting the riddle
 var httpRequestCallback = function(html){
   try {
-    var c = Cheerio.load(html);
-    var locations= c('script').get()[6].children[0].data;
-    var rx = /"lat":"([^"]*)","lng":"([^"]*)"/g;
-    var parse = rx.exec(locations);
+    var rx = /\[([^,^\[]*),([^\]]*)\]/g;
+    var parse = rx.exec(html);
     lat = parse[1];
     lng = parse[2];
 
@@ -32,7 +30,8 @@ var httpRequestCallback = function(html){
   }
 }
 var fetchCoordinates = function() {
-  Request('https://randomstreetview.com/').then(httpRequestCallback);
+  // rly ez data but approximate
+  Request('https://www.mapcrunch.com/_r/').then(httpRequestCallback);
 }
 fetchCoordinates();
 

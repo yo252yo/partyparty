@@ -47,6 +47,7 @@ add categories ? https://www.randomtriviagenerator.com/
 
 - Geoguess:
 -- mb the confirmation cross is not public anymore
+-- FIX!!!!!!!!!!!!!!!!!
 
 - gfeud:
 -- if a word is fully tipped out it can still count towards score
