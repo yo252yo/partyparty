@@ -3,7 +3,7 @@ There's easy and hard things to do for all talents!
 # Things we can always use more of
 ## Themes
 
-This you can do without programming expertise whatsoever, just put new files in the folder [`src/client/assets/avatars/`](src/client/assets/avatars/). Everything is picked up automatically. [`REAMDE.md`](src/client/assets/avatars/REAMDE.md) has more info.
+This you can do without programming expertise whatsoever, just put new files in the folder [`src/client/assets/avatars/`](src/client/assets/avatars/). Everything is picked up automatically. [`README.md`](src/client/assets/avatars/REAMDE.md) has more info.
 
 You can always add more themes, more modifiers, or expand the existing ones!
 
@@ -41,7 +41,7 @@ Check out [`src/minigames`](src/minigames) or [`src/maxigames`](src/maxigames) t
 * accents in french
 
 ## trivia
-add categories ? https://www.randomtriviagenerator.com/
+* add categories ? https://www.randomtriviagenerator.com/
 
 ## Geoguess
 * mb the confirmation cross is not public anymore
