@@ -14,18 +14,17 @@ PartyParty is a modular "mario-party" type of game to play in browser with your 
 
 Then you can run your own PartyParty instance with `bin/run`.
 
+## Code runthrough
 
-## TODO
+So for now this codebase is relatively simple.
 
+## Helping out!
+
+So you want to help? Check out [TODO.md](TODO.md)!
 
 
 ! a note on the includes: at runtime everything is fine but during the loading sequence of course race conditions/circular dependencies can happen, so I've put the require statement next to their use cases in the base modules and not at the top when possible.
 
-
-When deploying to a new environment, you might want to change
-bin/
-src/client/init_environment.js
-src/environment.ts
 
 
 <!-- THIS FILE DEPENDS ON THE ENVIRONMENT.
