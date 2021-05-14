@@ -1,0 +1,21 @@
+<img src="client/assets/loadscreens/deslettres.jpg" class="background_image" />
+
+<div class="textbox_1" style="background-color:pink;">
+  <div id="letters">letters coming soon</div>
+  <div id="askbuttons">
+    <input type="button" value="consonne" onclick="ClientSocket.send({DesLettresAskConsonne:1});" />
+    <input type="button" value="voyelle" onclick="ClientSocket.send({DesLettresAskVoyelle:1});" />
+  </div>
+
+
+  Your word:
+  <div class="textbox_1" style="background-color:pink;" id="yourword"></div>
+
+  <form onsubmit="window.sendAnswer();" action="javascript:void(0);">
+  <input type="text" id="answer">
+  <input type="button" value="propose" onclick="window.sendAnswer();">
+  </form>
+
+  <div id='timer'></div>
+  <div id='answers'></div>
+</div>

@@ -1,0 +1,31 @@
+
+<div style="background:white;opacity:0.9">
+<h1>Welcome</h1>
+You are <span id="player_id_div"></span><br />
+<input type="button" value="RerollName (dont overuse plz)" onclick="ClientSocket.send({rerollNameRequest:1});" />
+<br />
+
+Now playing <div id="all_players_div"></div>
+
+<h1>Minigame choser</h1>
+
+
+<input type="button" value="random" onclick="ClientSocket.send({setupRandomMinigame: 1});" />
+<input type="button" value="clickthecube" onclick="ClientSocket.send({setupMinigame: 'clickthecube'});" />
+<input type="button" value="riddle" onclick="ClientSocket.send({setupMinigame: 'riddle'});" />
+<input type="button" value="maze" onclick="ClientSocket.send({setupMinigame: 'maze'});" />
+<input type="button" value="trivia" onclick="ClientSocket.send({setupMinigame: 'trivia'});" />
+<input type="button" value="deslettres" onclick="ClientSocket.send({setupMinigame: 'deslettres'});" />
+<input type="button" value="captionstock" onclick="ClientSocket.send({setupMinigame: 'captionstock'});" />
+<input type="button" value="gfeud" onclick="ClientSocket.send({setupMinigame: 'gfeud'});" />
+<input type="button" value="quote" onclick="ClientSocket.send({setupMinigame: 'quote'});" />
+
+<hr />
+<input type="button" value="aidungeon" onclick="ClientSocket.send({setupMaxigame: 'aidungeon'});" />
+<input type="button" value="snakesandladder" onclick="ClientSocket.send({setupMaxigame: 'snakesandladders'});" />
+
+
+<hr />
+<input type="button" value="changeTheme" onclick="ClientSocket.send({setTheme: 1});" />
+<input type="button" value="resetgame" onclick="ClientSocket.send({resetWholeGameRequest: 1});" />
+</div>

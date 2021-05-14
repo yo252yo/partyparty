@@ -1,0 +1,23 @@
+
+<div style="background:white;opacity:0.9">
+<input type="button" value="resetgame" onclick="ClientSocket.send({resetWholeGameRequest: 1});" /><br />
+<h1>Welcome to snakes and ladders</h1>
+You are <span id="player_id_div"></span> -
+<input type="button" value="RerollName (dont overuse plz)" onclick="ClientSocket.send({rerollNameRequest:1});" />
+<br />
+
+Now playing <div id="all_players_div"></div>
+<hr />
+You can have one D6 roll per turn (between minigames):
+<input type="button" value="D6" onclick="ClientSocket.send({SnakesLaddRoll: '6'});" />
+<br />
+ You can use your minigames points to roll bonus dice:
+<input type="button" value="D3" onclick="ClientSocket.send({SnakesLaddRollBonus: '3'});" />
+<input type="button" value="D6-2" onclick="ClientSocket.send({SnakesLaddRollBonus: '6-2'});" />
+<input type="button" value="D10-5" onclick="ClientSocket.send({SnakesLaddRollBonus: '10-5'});" />
+<input type="button" value="D12-7" onclick="ClientSocket.send({SnakesLaddRollBonus: '12-7'});" />
+
+<hr />
+<div id="board"></div>
+
+</div>

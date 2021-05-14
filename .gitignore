@@ -1,3 +1,12 @@
+data/
+compiled/
+
+# Environment dependent:
+bin/
+src/client/init_environment.js
+src/environment.ts
+
+
 # Logs
 logs
 *.log
