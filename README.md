@@ -16,38 +16,29 @@ Then you can run your own PartyParty instance with `bin/run`.
 
 ## Code runthrough
 
-So for now this codebase is relatively simple.
+So for now this codebase is relatively simple. Let me walk you through the core concepts.
+You'll see two kinds of code:
+* Server side, it's in typescript `.ts` and it gets compiled and typed.
+* Client side, it's in javascript `.js` which is the same without types.
+All the code is in [src](`/src/`)
+
+The server side is essentially split between:
+* [`/modules/`](`/src/modules/`) which contains all singletons.
+* [`/classes/`](`/src/classes/`), objects you can have several of.
+
+The client side is essentially in [`/client/`](`/src/client/`) which is served directly to the clients (that's where images, scripts, etc... are).
+
+The architecture is pretty simple: the platform loads packages of code called games that execute both on client side and server side. Each package is a folder containing the following elements:
+
+- client.js will be executed by clients
+- server.ts will be executed by the server
+- client.html will be rendered in html body of clients
+- setup.html will be rendered in html body of clients while there is a readycheck going on (for minigames).
+
+All of them are optional. They'll be executed once when the game is loaded, but GameEngine.memory can hold info for you through the game if needed.
+
+But an example is worth a thousand words, so do check out the code :)
 
 ## Helping out!
 
 So you want to help? Check out [TODO.md](TODO.md)!
-
-
-! a note on the includes: at runtime everything is fine but during the loading sequence of course race conditions/circular dependencies can happen, so I've put the require statement next to their use cases in the base modules and not at the top when possible.
-
-
-
-<!-- THIS FILE DEPENDS ON THE ENVIRONMENT.
-<!-- YOU PROBABLY WANT TO HAVE IT IGNOREDBY GIT: -->
-<!-- git update-index --assume-unchanged client.html -->
-
-<!-- IF YOU CHANGE IT, MAKE SURE TO UPDATE THE IP OF THE SOCKET AND TO MAKE IT KNOWN TO GIT. -->
-<!-- git update-index --no-assume-unchanged client.html -->
-
-
-
-
-
-
-
-
-This mostly revolves around loading "games" which are in maxigames, minigames or othergames.
-Each folder can have the following optional files :
-- client.js will be executed by clients
-- server.ts will be executed by the server
-- client.html will be rendered in html body of clients
-- setup.html will be rendered in html body of clients while there is a readycheck going on.
-
-theyre executed once, but GameEngine.memory can hold info for you through the game
-
-module vs class
