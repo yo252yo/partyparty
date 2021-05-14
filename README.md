@@ -1,14 +1,21 @@
-# This is an <h1> tag
+# Welcome to PartyParty!
 
-install node, then
+PartyParty is a modular "mario-party" type of game to play in browser with your friends.
 
-node install
+## Setting up!
 
-npm rebuild
+* Get the files from this repository
+* Install node
+* Type `npm install` in the directory to fetch all the libraries
+* Make sure that the environment-specific files are the way you want them. They are:
+  * `bin/`
+  * `src/client/init_environment.js`
+  * `src/environment.ts`
 
-then
+Then you can run your own PartyParty instance with `bin/run`.
 
-node app.js
+
+## TODO
 
 
 
