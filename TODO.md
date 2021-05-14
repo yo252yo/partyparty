@@ -3,13 +3,13 @@ There's easy and hard things to do for all talents!
 # Things we can always use more of
 ## Themes
 
-This you can do without programming expertise whatsoever, just put new files in the folder [`src/client/assets/avatars/`](`src/client/assets/avatars/`). Everything is picked up automatically. [`REAMDE.md`](`src/client/assets/avatars/REAMDE.md`) has more info.
+This you can do without programming expertise whatsoever, just put new files in the folder [`src/client/assets/avatars/`](src/client/assets/avatars/). Everything is picked up automatically. [`REAMDE.md`](src/client/assets/avatars/REAMDE.md) has more info.
 
 You can always add more themes, more modifiers, or expand the existing ones!
 
 ## Games
 
-Check out [`src/minigames`](`src/minigames`) or [`src/maxigames`](`src/maxigames`) to make your own. You probably want to add whatever you do to [`minigamechoser`](`src/maxigames/minigamechoser`) for easy debugging.
+Check out [`src/minigames`](src/minigames) or [`src/maxigames`](src/maxigames) to make your own. You probably want to add whatever you do to [`minigamechoser`](src/maxigames/minigamechoser) for easy debugging.
 
 
 ### New minigames ideas
