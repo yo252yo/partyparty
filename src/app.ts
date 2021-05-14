@@ -7,7 +7,7 @@ import * as GameEngine from './modules/game_engine.js';
 import * as Router from "./router";
 import { ServerSocket } from './classes/server_socket.js';
 
-const port = 9090;
+const port = 25565;
 
 const appBase = express();
 const wsInstance = expressWs(appBase);
