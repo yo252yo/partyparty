@@ -1,8 +1,14 @@
 
+# This is an <h1> tag
+
+properly do readme.md and todo.md
+check .gitignore with the env files
+
+
+
 
 fix ai dungeon who forbids iframes now
 
-properly do readme
 
 "you are" and "reroll" in maxigames could be a shared template like playerlist
 
