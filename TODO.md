@@ -62,3 +62,4 @@ Check out [`src/minigames`](src/minigames) or [`src/maxigames`](src/maxigames) t
 * can we do some sort of boardgamearena integration
 * "you are" and "reroll" divs in maxigames could be a shared template like playerlist
 * scoreboard sucks at handling ties what about equality!!
+* Changemaxigame marche pas
