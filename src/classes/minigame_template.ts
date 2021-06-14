@@ -42,6 +42,9 @@ export class LeastScoreWinner extends Minigame {
   computeWinner(){
     var winner = this.scores.getMinScore();
     console.log("# Minigame ended with winner: " + winner);
+    if (!winner){
+      winner = "YOU ALL SUCK";
+    }
     SocketManager.broadcast({winnerAnnouncement: winner});
 
     if (winner) {
