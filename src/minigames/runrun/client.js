@@ -1,5 +1,10 @@
 
 var avatarSize = 40;
+var enemies = [];
+
+var collisiondistance = 0.04;
+var tick = 50;
+var maxstep = 0.015;
 
 var x = 0;
 var y = 0;
@@ -26,7 +31,6 @@ var broadcastPosition = function(){
 //var intervalBroadcast = setInterval(broadcastPosition, 400 + Math.floor(Math.random() * 100));
 
 var step = function(from, to){
-  var maxstep = 0.01;
   var diff = to - from;
   if (Math.abs(diff) > maxstep){
     diff = Math.sign(diff) * maxstep;
@@ -34,16 +38,51 @@ var step = function(from, to){
   return diff;
 }
 
+var updateEnemies = function() {
+  for (var i in enemies){
+//    console.log(1);
+    var e = enemies[i];
+    if (e.x > 0.95 && e.dx > 0){
+      e.dx = - e.dx;
+    }
+    if (e.x < 0.05 && e.dx < 0){
+      e.dx = - e.dx;
+    }
+
+    if (e.y > 0.95 && e.dy > 0){
+      e.dy = - e.dy;
+    }
+    if (e.y < 0.05 && e.dy < 0){
+      e.dy = - e.dy;
+    }
+
+    e.x += e.dx;
+    e.y += e.dy;
+
+    placePlayer("enemy_" + i, "#FF0000", e.x, e.y);
+
+    if (Math.abs(e.x-x) < collisiondistance && Math.abs(e.y-y) < collisiondistance){
+      x = 0;
+      y = 0;
+      target_x = 0;
+      target_y = 0;
+      return true;
+    }
+  }
+}
+
 var computePosition = function(){
+  var tp = updateEnemies();
+
   dx = step(x, target_x);
   dy = step(y, target_y);
-  if (dx == 0 && dy == 0){ return; }
+  if (dx == 0 && dy == 0 && !tp){ return; }
   x = x + dx;
   y = y + dy;
   placePlayer(ClientSocket.webSocket.player_data.player_id, ClientSocket.webSocket.player_data.color, x, y);
   broadcastPosition();
 };
-var intervalPosition = setInterval(computePosition, 50);
+var intervalPosition = setInterval(computePosition, tick);
 
 
 
@@ -63,8 +102,11 @@ var getOrMakeDiv = function(player_id, player_color){
     v.unselectable = "on";
     v.class="unselectable";
     v.id = "div_" + player_id;
-    v.innerHTML = ClientHTMLTemplates.makeOnePlayerDiv({player_id: player_id, color: player_color}, avatarSize-1);
-
+    if(!player_id.startsWith("enemy_")){
+      v.innerHTML = ClientHTMLTemplates.makeOnePlayerDiv({player_id: player_id, color: player_color}, avatarSize-1);
+    } else{
+      v.innerHTML = `<img src='client/assets/games/runner.png' style="width:${avatarSize-1}px;height:${avatarSize-1}px;" />`;
+    }
     area.appendChild(v);
   }
   return v;
@@ -77,13 +119,23 @@ var placePlayer = function(player_id, player_color, pos_x, pos_y){
   v.style.top = pos_y * area.getBoundingClientRect().height;
 }
 
+
+var makeEnemy = function (index, enemy) {
+  placePlayer("enemy_" + index, "#FF0000", enemy.x, enemy.y);
+  enemies[index] = enemy;
+}
+
 ClientSocket.extraListener = function(object) {
   if (object.PlayerPosition){
     if (object.PlayerPosition.player_id == ClientSocket.webSocket.player_data.player_id){
       return;
     }
     placePlayer(object.PlayerPosition.player_id, object.PlayerPosition.player_color, object.PlayerPosition.x, object.PlayerPosition.y);
-
+  }
+  if (object.Enemies){
+    for(var i in object.Enemies){
+      makeEnemy(i, object.Enemies[i]);
+    }
   }
   if (object.winnerAnnouncement) {
     document.removeEventListener('click', onClick);
