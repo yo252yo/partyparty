@@ -1,1 +1,1 @@
-ClientSocket.initializeToIp('ws://localhost:9090/');
+ClientSocket.initializeToIp('ws://localhost:25565/');
