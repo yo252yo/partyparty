@@ -1,8 +1,9 @@
 
 var avatarSize = 40;
 var enemies = [];
+var otherPlayers = {};
 
-var collisiondistance = 0.04;
+var collisiondistance = 0.03;
 var tick = 50;
 var maxstep = 0.015;
 
@@ -71,12 +72,24 @@ var updateEnemies = function() {
   }
 }
 
+var collisionPlayer = function(x, y){
+  for(var ai in otherPlayers){
+    var a = otherPlayers[ai];
+    if (Math.abs(a.x-x) < collisiondistance && Math.abs(a.y-y) < collisiondistance){
+      return true;
+    }
+  }
+  return false;
+}
+
 var computePosition = function(){
-  var tp = updateEnemies();
+  var has_tp = updateEnemies();
 
   dx = step(x, target_x);
   dy = step(y, target_y);
-  if (dx == 0 && dy == 0 && !tp){ return; }
+  if (dx == 0 && dy == 0 && !has_tp){ return; }
+  if( x > 0.1 && y>0.1 && collisionPlayer(x+dx, y+dy)){ return; }
+
   x = x + dx;
   y = y + dy;
   placePlayer(ClientSocket.webSocket.player_data.player_id, ClientSocket.webSocket.player_data.color, x, y);
@@ -130,6 +143,7 @@ ClientSocket.extraListener = function(object) {
     if (object.PlayerPosition.player_id == ClientSocket.webSocket.player_data.player_id){
       return;
     }
+    otherPlayers[object.PlayerPosition.player_id] = object.PlayerPosition;
     placePlayer(object.PlayerPosition.player_id, object.PlayerPosition.player_color, object.PlayerPosition.x, object.PlayerPosition.y);
   }
   if (object.Enemies){
@@ -143,3 +157,5 @@ ClientSocket.extraListener = function(object) {
     clearInterval(intervalPosition);
   }
 }
+
+placePlayer(ClientSocket.webSocket.player_data.player_id, ClientSocket.webSocket.player_data.color, x, y);
