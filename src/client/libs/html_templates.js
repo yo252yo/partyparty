@@ -39,6 +39,28 @@ const ClientHTMLTemplates = {
     document.body.style.backgroundImage = "url('client/assets/themes/" + ClientSocket.getTheme() + ".png')";
   },
 
+  makeOnePlayerDiv: function(player, h, score){
+    var player_div = "<div style='margin:1%;padding:1%;display:inline-block;overflow:hidden;color:" + player.color;
+    player_div += "; background-color:" + ClientHTMLTemplates.invertColor(player.color);
+    if (player.player_id == ClientSocket.getPlayerId()) {
+       player_div += "; font-weight:bold;"
+    };
+    player_div += "'>";
+    if(typeof(score) != "undefined"){
+      player_div += score + "-" +  player.player_id + "<br />";
+    }
+
+    var id = player.player_id.replace(/([A-Z])/g, ' $1').split(" ");
+    var w = Math.floor(h*190/300);
+
+    player_div += `<div style='position:relative;width:${w}px;height:${h}px;'>`;
+    player_div += "<img src='client/assets/avatars/modifiers/" + id[1] + "_above.png' style='z-index:4;position:absolute;width:100%;height:100%;' />";
+    player_div += "<img src='client/assets/avatars/nouns/" + ClientSocket.getTheme() + "/" + id[2] + ".png' style='z-index:3;position:absolute;width:50%;height:30%;left:25%;top:15%' />";
+    player_div += "<img src='client/assets/avatars/modifiers/" + id[1] + "_below.png' style='z-index:2;position:absolute;width:100%;height:100%;' />";
+    player_div += "</div></div>";
+    return player_div;
+  },
+
   makeAllPlayersDiv: function(received_object) {
     var all_players_ids = "";
     for (var i in received_object.playerList) {
@@ -48,19 +70,7 @@ const ClientHTMLTemplates = {
         score = received_object.scores[player.player_id];
       }
 
-      all_players_ids += "<div style='margin:5px;width:200px;height:320px;padding:5px;display:inline-block;overflow:hidden;color:" + player.color;
-      all_players_ids += "; background-color:" + ClientHTMLTemplates.invertColor(player.color);
-      if (player.player_id == ClientSocket.getPlayerId()) {
-         all_players_ids += "; font-weight:bold;"
-       };
-      all_players_ids += "'>";
-      all_players_ids += score + "-" +  player.player_id + "<br /><div style='position:relative;'>";
-      var id = player.player_id.replace(/([A-Z])/g, ' $1').split(" ");
-      all_players_ids += "<img src='client/assets/avatars/modifiers/" + id[1] + "_above.png' style='z-index:4;position:absolute;width:190px;height:300px;' />";
-      all_players_ids += "<img src='client/assets/avatars/nouns/" + ClientSocket.getTheme() + "/" + id[2] + ".png' style='z-index:3;position:absolute;width:80px;height:80px;left:55px;top:50px' />";
-      all_players_ids += "<img src='client/assets/avatars/modifiers/" + id[1] + "_below.png' style='z-index:2;position:absolute;width:190px;height:300px;' />";
-
-      all_players_ids += "</div></div>";
+      all_players_ids += ClientHTMLTemplates.makeOnePlayerDiv(player, 300, score);
     }
 
     var potentialHtmlElement = document.getElementById('all_players_div');

@@ -1,5 +1,5 @@
 
-var avatarSize = 20;
+var avatarSize = 40;
 
 var x = 0;
 var y = 0;
@@ -23,7 +23,7 @@ var broadcastPosition = function(){
     }
   });
 };
-var intervalBroadcast = setInterval(broadcastPosition, 400 + Math.floor(Math.random() * 100));
+//var intervalBroadcast = setInterval(broadcastPosition, 400 + Math.floor(Math.random() * 100));
 
 var step = function(from, to){
   var maxstep = 0.01;
@@ -35,9 +35,13 @@ var step = function(from, to){
 }
 
 var computePosition = function(){
-  x = x + step(x, target_x);
-  y = y + step(y, target_y);
+  dx = step(x, target_x);
+  dy = step(y, target_y);
+  if (dx == 0 && dy == 0){ return; }
+  x = x + dx;
+  y = y + dy;
   placePlayer(ClientSocket.webSocket.player_data.player_id, ClientSocket.webSocket.player_data.color, x, y);
+  broadcastPosition();
 };
 var intervalPosition = setInterval(computePosition, 50);
 
@@ -56,10 +60,12 @@ var getOrMakeDiv = function(player_id, player_color){
     v.style.width = avatarSize + "px";
     v.style.height = avatarSize + "px";
     v.style.position = "absolute";
+    v.unselectable = "on";
+    v.class="unselectable";
     v.id = "div_" + player_id;
-    area.appendChild(v);
+    v.innerHTML = ClientHTMLTemplates.makeOnePlayerDiv({player_id: player_id, color: player_color}, avatarSize-1);
 
-    // TODO: make avatar
+    area.appendChild(v);
   }
   return v;
 }
@@ -81,7 +87,7 @@ ClientSocket.extraListener = function(object) {
   }
   if (object.winnerAnnouncement) {
     document.removeEventListener('click', onClick);
-    clearInterval(intervalBroadcast);
+    //clearInterval(intervalBroadcast);
     clearInterval(intervalPosition);
   }
 }
