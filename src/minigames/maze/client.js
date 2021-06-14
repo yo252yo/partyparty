@@ -83,7 +83,7 @@ var broadcastPosition = function(){
     }
   });
 }
-var interval = setInterval(broadcastPosition, Math.floor(Math.random() * 500));
+var interval = setInterval(broadcastPosition, 400 + Math.floor(Math.random() * 100));
 
 var goUp = function(e) {
   maze[x*width+y]=0;
